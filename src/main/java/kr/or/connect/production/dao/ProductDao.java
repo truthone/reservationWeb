@@ -1,12 +1,10 @@
 package kr.or.connect.production.dao;
 
-import static kr.or.connect.production.dao.ProductDaoSqls.SELECT_COUNT_ALL;
 import static kr.or.connect.production.dao.ProductDaoSqls.SELECT_FILENAME_ALL;
 import static kr.or.connect.production.dao.ProductDaoSqls.SELECT_FILENAME_BY_CATEGORY;
 import static kr.or.connect.production.dao.ProductDaoSqls.SELECT_PRODUCT_ALL;
 import static kr.or.connect.production.dao.ProductDaoSqls.SELECT_PRODUCT_BY_CATEGORY;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +22,7 @@ import kr.or.connect.production.dto.Product;
 @Repository
 public class ProductDao {
 	 private static final String SELECT_COUNT_BY_CATEGORY = null;
+	 
 	private NamedParameterJdbcTemplate jdbc;
 	    private SimpleJdbcInsert insertAction;
 	    private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
@@ -42,10 +41,7 @@ public class ProductDao {
 	        return jdbc.query(SELECT_PRODUCT_ALL, params, rowMapper);
 	        
 	    } 
-		public int selectCountAll() {
-			return jdbc.queryForObject(SELECT_COUNT_ALL, Collections.emptyMap(), Integer.class);
-		}
-		
+
 		public int selectCountByCategory(Integer categoryId) {
 				Map<String, Integer> params = new  HashMap<>();
 				params.put("categoryId",categoryId);

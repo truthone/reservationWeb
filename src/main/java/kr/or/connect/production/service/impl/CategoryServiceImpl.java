@@ -17,28 +17,18 @@ public class CategoryServiceImpl implements CategoryService{
 
 @Override
 public List<Category> categories(){
-	return categoryDao.countByCategory();
+	return categoryDao.categories();
 }
 
 @Override
 public int getCountAll() {
-	List<Category> categories = categoryDao.countByCategory();
-	int countAll= 0;
-	for (int i = 0; i < categories.size(); i++) {
-		
-		countAll += categories.get(i).getCount();
-	}
-	
-	return countAll;
+    return categoryDao.countAll();
 }
 
 @Override
-public int getCountByCategory(int categoryId){
-	
-	List<Category> categories = categoryDao.countByCategory();
-	int count = 0; 
-	count = categories.get(categoryId-1).getCount();
-	
+public int getCountByCategory(Integer categoryId){
+	List<Category> category =  categoryDao.countByCategory(categoryId);
+	int count = category.get(0).getCount();
 	return count;
 }
 

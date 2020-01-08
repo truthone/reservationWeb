@@ -24,28 +24,6 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public int getCountAll() {
-		return productDao.selectCountAll();
-	}
-	
-	@Override
-	public int getCountByCategory(Integer categoryId) {
-		
-		return productDao.selectCountByCategory(categoryId);
-	}
-	@Override
-	public List<Product> getSaveFileName(Integer start) {
-		List<Product> list = productDao.selectSaveFileNameAll(start, ProductService.LIMIT);
-		return list;
-	}
-	
-	@Override
-	public List<Product> getSaveFileNameByCategory(Integer start, Integer categoryId) {
-		List<Product> list = productDao.selectSaveFileNameByCategory(start, ProductService.LIMIT,categoryId);
-		return list;
-	}
-	
-	@Override
 	public List<Product> productByCategory(Integer start, Integer categoryId){
 		List<Product> list = productDao.selectProductByCategory(start,ProductService.LIMIT,categoryId);
 	

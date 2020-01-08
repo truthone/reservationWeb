@@ -80,9 +80,9 @@
 		</dependency>
 		
 		<dependency>   
-        <groupId>mysql</groupId>   
-        <artifactId>mysql-connector-java</artifactId>
-        <version>5.1.46</version>
+	        <groupId>mysql</groupId>   
+	        <artifactId>mysql-connector-java</artifactId>
+	        <version>5.1.46</version>
         </dependency>
         
      <!-- basic data source -->
@@ -107,6 +107,7 @@
 		
   </dependencies>
   
+  
   <build>
     <finalName>production</finalName>
      <plugins>
@@ -119,7 +120,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-		</plugins>
+	</plugins>
   </build>
   <artifactId>production</artifactId>
 </project>

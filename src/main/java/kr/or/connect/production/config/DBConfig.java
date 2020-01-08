@@ -3,23 +3,30 @@ package kr.or.connect.production.config;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 @Configuration
+@PropertySource("classpath:test/application.properties")
 @EnableTransactionManagement
 public class DBConfig implements TransactionManagementConfigurer {
-	private String driverClassName = "com.mysql.jdbc.Driver";
+	@Value("${spring.datasource.driver-class-name}")
+	private String driverClassName;
 
-	private String url = "jdbc:mysql://localhost:3306/connectdb?useUnicode=true&characterEncoding=utf8";
+	@Value("${spring.datasource.url}")
+	private String url;
 
-	private String username = "connectuser";
+	@Value("${spring.datasource.username}")
+	private String username;
 
-	private String password = "connect123!@#";
+	@Value("${spring.datasource.password}")
+	private String password;
 
 	@Bean
 	public DataSource dataSource() {

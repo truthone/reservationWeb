@@ -42,33 +42,7 @@
                         <div>
                             <div class="container_visual" >
                                 <!-- [D] 이전,다음 버튼을 클릭할때마다 캐러셀 형태로 순환 됨 -->
-                                <ul class="visual_img" style=" transform: translateX(0px); transition-duration : 0.5s;  width:500%">
-                                <li style="float:left; list-style:none; position : relative; width: 414px;">
-                                   <div class="item event"  style="background-image:
-                                   url(./img/1_th_1.png); width: 414px;">
-                                   </div>                             
-                                </li>
-                                <li style="float:left; list-style:none; position : relative; width: 414px;">
-                                   <div class="item event"  style="background-image:
-                                   url(./img/3_th_9.png); width: 414px;">
-                                   </div>                             
-                                </li>
-                                <li style="float:left; list-style:none; position : relative; width: 414px;">
-                                   <div class="item event"  style="background-image:
-                                   url(./img/5_th_13.png); width: 414px;">
-                                   </div>                             
-                                </li>
-                                <li style="float:left; list-style:none; position : relative; width: 414px;">
-                                   <div class="item event"  style="background-image:
-                                   url(./img/9_th_24.png); width: 414px;">
-                                   </div>                             
-                                </li>
-                                <li style="float:left; list-style:none; position : relative; width: 414px;">
-                                   <div class="item event"  style="background-image:
-                                   url(./img/25_th_61.png); width: 414px;">
-                                   </div>                             
-                                </li>
-                                
+                                <ul class="visual_img" style=" transform: translateX(0px); transition-duration : 0.5s; width: max-content"> 
                                 </ul>
                             </div>
                             <span class="nxt_fix" style="display:none;"></span>
@@ -81,26 +55,20 @@
                 <ul id="event_tab" class="event_tab_lst tab_lst_min">
                  <li class="item" data-category="0">
                         <a class="anchor active"> <span>전체보기</span> </a>
-                    </li>
-                 <c:forEach items="${categoryList}" var="category" varStatus="status">
-                  <li class="item" data-category="${status.count}">
-                        <a class="anchor"> <span>${category.name}</span> </a>
-                    </li>
-                 </c:forEach>
+                 </li>
                 </ul>
             </div>
             <div class="section_event_lst">
-                <p class="event_lst_txt">바로 예매 가능한 행사가 <span class="pink">${countAll}개</span> 있습니다</p>
+                <p class="event_lst_txt">바로 예매 가능한 행사가 <span class="pink"></span> 있습니다</p>
                 <div class="wrap_event_box">
                     <!-- [D] lst_event_box 가 2컬럼으로 좌우로 나뉨, 더보기를 클릭할때마다 좌우 ul에 li가 추가됨 -->
                     <ul class="lst_event_box">
-                     <div class = "displayList_left"></div>
+                     <div class = "displayProductList_left"></div>
                     </ul>
                    <ul class="lst_event_box">
-                     <div class = "displayList_right"></div>
+                     <div class = "displayProductList_right"></div>
                     </ul>
           
-              
                     <!-- 더보기 -->
                     <div class="more"><button class="btn" id="moreBtn"><span>더보기</span></button></div>
                 </div>
@@ -118,11 +86,18 @@
     </footer>
 
 <!-- 템플릿 모음 -->
+
+	<script type = "rv-template" id ="categoryItem">
+       <li class="item" data-category="{categoryId}">
+          <a class="anchor"><span>{categoryName}</span> </a>
+       </li>
+    </script>
+    
     <script type="rv-template" id = "moreBtnHTML">
        <button class="btn" id="moreBtn"><span>더보기</span></button>
     </script>
     
-    <script type="rv-template" id="promotionItem">
+    <script type="rv-template" id="">
     <li class="item" style="background-image: url(http://211.249.62.123/productImages/${productId}/${productImageId});">
         <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
             <div class="event_txt">
@@ -134,7 +109,7 @@
     </li>
     </script>
 
-    <script type="rv-template" id="itemList">
+    <script type="rv-template" id="productItem">
         <li class="item">
             <a href="detail.html?id={productId}" class="item_book">
                 <div class="item_preview">
@@ -148,12 +123,17 @@
             </a>
         </li>
     </script>
+    
+    <script type="rv-template" id="promotionItem">
+        <li class="item event" style="float:left; list-style:none; position : relative; width: 414px;" >
+           <div class="item event" style="background-image: url(./img/{productImageUrl}); width: 414px;"></div>                             
+	    </li>
+    </script>
 </body>
-
   <!-- 스크립트 모음 -->
     <script src="./js/slide.js?ver=3"></script>
-    <script src="./js/itemList-templating.js?ver=5"></script>
-    
+    <script src="./js/templatingProducts.js?ver=5"></script>
+    <script src="./js/templatingPromotions.js"></script>
 
 </html>
  

@@ -3,30 +3,53 @@ var categoryId= 0;
 var startPageIndex =0;
 var length;
 
+
+function AjaxCategory(){
+	var oReq = new XMLHttpRequest();
+	var url = "api/categories";
+	
+	oReq.addEventListener("load",function(){
+		var json = JSON.parse(this.responseText);
+		var categoryList = json.categoryList;
+		
+		templatingCategory(categoryList);
+		
+	});
+	oReq.open("GET",url);
+	oReq.send();
+}
+
 function AjaxProducts(){
 	
 	var oReq = new XMLHttpRequest();
 	var url = "api/products";
+
 	
 	oReq.addEventListener("load",function(){
 		
 		var json = JSON.parse(this.responseText);
 		var productList = json.productList;
+		var totalCount = json.totalCount;
 		
 	    pageStartList = json.pageStartList;
 	    length = pageStartList.length;
         startPageIndex++;
-		templating(productList);
-		
+
+        
+        templatingProduct(productList);
+        templatingCount(totalCount);
+	   
 	});
 	
 	oReq.open("GET",url);
 	oReq.send();
 }
 
+
+
 function searchAnchorActive(){
 	var target = document.querySelector(".anchor active").parentNode;
-	var categoryId = target.dataset.category;
+    categoryId = target.dataset.category;
 }
 
 document.addEventListener("DOMContentLoaded",function(){
@@ -35,81 +58,87 @@ document.addEventListener("DOMContentLoaded",function(){
 
 function bubbling (){
 
-	var categoryList = document.querySelector("#event_tab");
-	
-	categoryList.addEventListener("click", function(evt){ 
+	let categoryListTab = document.querySelector("#event_tab");
+	categoryListTab.addEventListener("click", function(evt){ 
 		
 		if(evt.target.tagName === "SPAN"){
 			
-		  var b = document.getElementsByClassName("anchor active")
-		  b[0].className = "anchor";
+		  var nowActive = document.getElementsByClassName("anchor active")
+		  nowActive[0].className = "anchor";
 		  
-		  var a = evt.target.parentNode; 
-		  a.className = "anchor active";
+		  var clickStatus = evt.target.parentNode; 
+		  clickStatus.className = "anchor active";
 		 
 		  var Li = evt.target.parentNode.parentNode;
 		  
 		  categoryId = Li.dataset.category;
-		  clickCategoriesAjax(pageStartList,categoryId);
+		  startPageIndex =0;
+		  clickCategoryProductAjax(startPageIndex,categoryId);
 		  
 		}else if(evt.target.tagName === "A"){
 			
-			  var b = document.getElementsByClassName("anchor active")
-			  b[0].className = "anchor";
+			  var nowActive = document.getElementsByClassName("anchor active")
+			  nowActive[0].className = "anchor";
 			  
-			  var a = evt.target; 
-			  a.className = "anchor active";
+			  var clickStatus = evt.target; 
+			  clickStatus.className = "anchor active";
 			  
 			  var Li = evt.target.parentNode;
 			  categoryId = Li.dataset.category;
-			  clickCategoriesAjax(pageStartList,categoryId);
+			  startPageIndex =0;
+			  clickCategoryProductAjax(startPageIndex,categoryId);
+
 
 	}});
 }
 
-function clickCategoriesAjax(pageStartList,categoryId){
 
+
+
+function clickCategoryProductAjax(startPageIndex,categoryId){
 	removeListNode();
-
     moreDiv = document.querySelector(".more");	
-	this.startPageIndex = 0;
-	
+    
 	if(!moreDiv.firstElementChild){
+		
 		  var btnHTML = document.querySelector("#moreBtnHTML").innerHTML;
-
 		  moreDiv.insertAdjacentHTML("beforeend",btnHTML);
-		  moreBtn =  document.getElementById("moreBtn"); 
-		}
+		  
+		  var newMoreBtn =  document.getElementById("moreBtn"); 
+		  newMoreBtn.addEventListener("click", function(){
+			  
+			  newCategoryId = categoryId;
+			  ClickMoreAjax(pageStartList,newCategoryId);
+		});		 
+	}
 	
-	 moreBtn.addEventListener("click", function(){
-		  ClickMoreAjax(pageStartList,categoryId);
-	});
-	 
 	var oReq = new XMLHttpRequest();
-	var url = "api/products?categoryId="+categoryId+"&start="+ 0; 
+	var url = "api/products?categoryId="+categoryId+"&start="+0; 
 	
 	oReq.addEventListener("load",function(){
-
+        this.startPageIndex = 0;
 		var json = JSON.parse(this.responseText);
         var productList = json.productList;
-        
+        var totalCount = json.totalCount;
+
 	    pageStartList = json.pageStartList;
 	    length = pageStartList.length;
-	    templating(productList);
-		
+	    
+	    templatingProduct(productList);
+	    templatingCount(totalCount);
+	    
 	});
-
+	
 	oReq.open("GET",url);
 	oReq.send();
+	this.startPageIndex++;
 	
-	this.startPageIndex++; 
 }
-
 
 var moreBtn =  document.getElementById("moreBtn");
 moreBtn.addEventListener("click", function(){
 	  ClickMoreAjax(pageStartList,categoryId);
-});
+});	
 
 function ClickMoreAjax(pageStartList,categoryId){
 
@@ -121,28 +150,29 @@ function ClickMoreAjax(pageStartList,categoryId){
 	oReq.addEventListener("load",function(){
 		var json = JSON.parse(this.responseText);
 		var productList = json.productList;
-	    var saveFileName = json.saveFileName;
-	    
-		templating(productList);
+	 
+		templatingProduct(productList);
 		
 	});
 	
 	oReq.open("GET",url);
 	oReq.send();
+	
     this.startPageIndex++;
     
 	}
 	
-	if ( this.startPageIndex >= this.length){
-		console.log(length);
-		moreBtn.remove();
-	}
+	if ( this.startPageIndex >= this.length) 
+		{
+		    var moreBtn =  document.getElementById("moreBtn");
+		    moreBtn.remove();
+		    }
 }
 
 
 function removeListNode(){
-	var leftList = document.querySelector(".displayList_left");
-	var rightList = document.querySelector(".displayList_right");
+	var leftList = document.querySelector(".displayProductList_left");
+	var rightList = document.querySelector(".displayProductList_right");
 	
 	while(leftList.hasChildNodes()){
 	  leftList.removeChild(leftList.firstChild);
@@ -152,13 +182,32 @@ function removeListNode(){
 		rightList.removeChild(rightList.firstChild);
 	}
 	
-    startPageIndex = 0;
 }
 
+function templatingCategory(categoryList){
+	var categoryHTML = document.querySelector("#categoryItem").innerHTML;
+	
+	for(var i = 0; i < categoryList.length; i++){
+		var resultHTML = "";
+		
+		resultHTML += categoryHTML
+				.replace(/{categoryId}/g,categoryList[i].id)
+				.replace(/{categoryName}/g,categoryList[i].name);
+		
+		var categoryLi = document.querySelector("#event_tab");
+		categoryLi.insertAdjacentHTML("beforeend",resultHTML);
+	}
+}
 
-function templating(productList) {
+function templatingCount(totalCount){
+	var countPlace = document.querySelector(".pink");
+	countPlace.innerHTML = "";
+	countPlace.insertAdjacentHTML("afterbegin",totalCount+"개");
+}
 
-	var productHTML = document.querySelector("#itemList").innerHTML;
+function templatingProduct(productList) {
+
+	var productHTML = document.querySelector("#productItem").innerHTML;
     var limit = 2;
     
 	for (var i = 0; i < productList.length; i++) {
@@ -173,7 +222,7 @@ function templating(productList) {
 				.replace(/{placeName}/g, productList[i].placeName)
                 .replace(/{productImageUrl}/g, productList[i].productImageUrl);
                  
-                var leftLi = document.querySelector(".displayList_left");
+                var leftLi = document.querySelector(".displayProductList_left");
 	            leftLi.insertAdjacentHTML("beforeend", leftResultHTML);
 	         
         }
@@ -187,13 +236,16 @@ function templating(productList) {
 		       .replace(/{placeName}/g, productList[i].placeName)
                .replace(/{productImageUrl}/g, productList[i].productImageUrl);
 
-               var rightLi = document.querySelector(".displayList_right");
+               var rightLi = document.querySelector(".displayProductList_right");
                rightLi.insertAdjacentHTML("beforeend", rightResultHTML);
                
         }
     }
 }
 
+
+AjaxCategory();
 AjaxProducts();
+
 
                                                                                                                                              

@@ -1,6 +1,6 @@
 package kr.or.connect.production.dao;
 
-
+import static kr.or.connect.production.dao.CategoryDaoSqls.SELECT_CATEGORIES;
 import static kr.or.connect.production.dao.CategoryDaoSqls.SELECT_COUNT_ALL;
 import static kr.or.connect.production.dao.CategoryDaoSqls.SELECT_COUNT_BY_CATEGORY;
 
@@ -32,12 +32,18 @@ public class CategoryDao {
 	                .usingGeneratedKeyColumns("id");
 	    }
 	    
-	    public int CountAll() {
+	    public List<Category> categories(){
+	    	Map<String, Integer> params = new HashMap<>();
+	    	 return jdbc.query(SELECT_CATEGORIES, params, rowMapper);
+	    }
+	    public int countAll() {
 	        return jdbc.queryForObject(SELECT_COUNT_ALL, Collections.emptyMap(), Integer.class);
 	    }
 		
-		public List<Category> countByCategory() {
+		public List<Category> countByCategory(Integer categoryId) {
 			Map<String, Integer> params = new HashMap<>();
+			params.put("categoryId", categoryId);
 			return jdbc.query(SELECT_COUNT_BY_CATEGORY, params, rowMapper);
+			
 		}
 }
