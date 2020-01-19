@@ -1,7 +1,7 @@
 package kr.or.connect.production.dao;
 
 public class CategoryDaoSqls {
-	public static final String SELECT_CATEGORIES = 
+	public static final String SELECT_CATEGORIES_NAME = 
 	        "SELECT  category_id AS id, category.name AS name, count(category_id) AS count\r\n"+
     		"FROM product, display_info , display_info_image , file_info, category \r\n" + 
             		
@@ -13,7 +13,7 @@ public class CategoryDaoSqls {
     		"GROUP BY category_id"
     		;	
 	
-	public static final String SELECT_COUNT_ALL = 
+	public static final String COUNT_PRODUCTS_ALL = 
 	        "SELECT count(*) AS count\r\n"+
 			"FROM product, display_info , display_info_image , file_info \r\n" + 
 	        		
@@ -23,7 +23,7 @@ public class CategoryDaoSqls {
 			
 			;
 
-public static final String SELECT_COUNT_BY_CATEGORY = 			
+public static final String COUNT_PRODUCTS_BY_CATEGORY = 			
         "SELECT count(category_id) AS count\r\n"+
 		"FROM product, display_info , display_info_image , file_info \r\n" + 
         		

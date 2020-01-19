@@ -7,5 +7,5 @@ import kr.or.connect.production.dto.Product;
 public interface ProductService {
 	public static final Integer LIMIT = 4;
 	public List<Product> productsAll(Integer start);
-	public List<Product> productByCategory (Integer start, Integer categoryId);
+	public List<Product> productsByCategory (Integer start, Integer categoryId);
 }

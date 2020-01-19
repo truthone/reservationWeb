@@ -70,7 +70,7 @@
                     </ul>
           
                     <!-- 더보기 -->
-                    <div class="more"><button class="btn" id="moreBtn"><span>더보기</span></button></div>
+                    <div class="more"><button class="btn" id="moreBtn" style="display:"><span>더보기</span></button></div>
                 </div>
             </div>
         </div>
@@ -97,21 +97,9 @@
        <button class="btn" id="moreBtn"><span>더보기</span></button>
     </script>
     
-    <script type="rv-template" id="">
-    <li class="item" style="background-image: url(http://211.249.62.123/productImages/${productId}/${productImageId});">
-        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
-            <div class="event_txt">
-                <h4 class="event_txt_tit"></h4>
-                <p class="event_txt_adr"></p>
-                <p class="event_txt_dsc"></p>
-            </div>
-        </a>
-    </li>
-    </script>
-
     <script type="rv-template" id="productItem">
         <li class="item">
-            <a href="detail.html?id={productId}" class="item_book">
+            <a href="detail/{displayInfoId}" class="item_book">
                 <div class="item_preview">
                     <img alt="{productDescription}" class="img_thumb" src="./img/{productImageUrl}">
                     <span class="img_border"></span>
@@ -132,7 +120,7 @@
 </body>
   <!-- 스크립트 모음 -->
     <script src="./js/slide.js?ver=3"></script>
-    <script src="./js/templatingProducts.js?ver=5"></script>
+    <script src="./js/templatingProducts.js?ver=6"></script>
     <script src="./js/templatingPromotions.js"></script>
 
 </html>

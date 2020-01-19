@@ -1,8 +1,8 @@
 package kr.or.connect.production.dao;
 
-import static kr.or.connect.production.dao.CategoryDaoSqls.SELECT_CATEGORIES;
-import static kr.or.connect.production.dao.CategoryDaoSqls.SELECT_COUNT_ALL;
-import static kr.or.connect.production.dao.CategoryDaoSqls.SELECT_COUNT_BY_CATEGORY;
+import static kr.or.connect.production.dao.CategoryDaoSqls.SELECT_CATEGORIES_NAME;
+import static kr.or.connect.production.dao.CategoryDaoSqls.COUNT_PRODUCTS_ALL;
+import static kr.or.connect.production.dao.CategoryDaoSqls.COUNT_PRODUCTS_BY_CATEGORY;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,16 +34,16 @@ public class CategoryDao {
 	    
 	    public List<Category> categories(){
 	    	Map<String, Integer> params = new HashMap<>();
-	    	 return jdbc.query(SELECT_CATEGORIES, params, rowMapper);
+	    	 return jdbc.query(SELECT_CATEGORIES_NAME, params, rowMapper);
 	    }
-	    public int countAll() {
-	        return jdbc.queryForObject(SELECT_COUNT_ALL, Collections.emptyMap(), Integer.class);
+	    public int countProductsAll() {
+	        return jdbc.queryForObject(COUNT_PRODUCTS_ALL, Collections.emptyMap(), Integer.class);
 	    }
 		
-		public List<Category> countByCategory(Integer categoryId) {
+		public List<Category> countProductsByCategory(Integer categoryId) {
 			Map<String, Integer> params = new HashMap<>();
 			params.put("categoryId", categoryId);
-			return jdbc.query(SELECT_COUNT_BY_CATEGORY, params, rowMapper);
+			return jdbc.query(COUNT_PRODUCTS_BY_CATEGORY, params, rowMapper);
 			
 		}
 }
