@@ -8,7 +8,14 @@ public class Product {
 	private String productContent;
 	private String placeName;
 	private String productImageUrl;
+	private int displayInfoId;
     
+	public int getDisplayInfoId() {
+		return displayInfoId;
+	}
+	public void setDisplayInfoId(int displayInfoId) {
+		this.displayInfoId = displayInfoId;
+	}
 	public String getProductDescription() {
 		return productDescription;
 	}

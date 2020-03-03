@@ -25,7 +25,6 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<Product> productsByCategory(Integer start, Integer categoryId){
 		List<Product> list = productDao.selectProductByCategory(start,ProductService.LIMIT,categoryId);
-	
 		return list;
 		
 	}

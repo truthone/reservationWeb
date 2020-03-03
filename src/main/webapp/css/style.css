@@ -552,6 +552,9 @@ hr {
 .spr_book2.ico_arr6_lt.off {
 	opacity: 0.6;
 }
+.spr_book2.ico_arr6_rt.off{
+	opacity: 0.6;
+}
 .spr_bi {
     background-image: url(../img/spr_bi.png);
     background-size: 130px 120px
@@ -1261,8 +1264,7 @@ button {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -ms-backface-visibility: hidden;
-    backface-visibility: hidden;
-    height:176px;
+    backface-visibility: hidden
 }
 
 .group_visual {
@@ -1282,13 +1284,12 @@ button {
     font: 0/0 a;
     color: #fff;
     white-space: nowrap
- 
 }
 
 .group_visual .visual_img .item {
     overflow: hidden;
     position: relative;
-    
+    display: inline-block;
     white-space: normal;
     vertical-align: top
 }
@@ -2385,7 +2386,7 @@ button {
 }
 
 .section_review_list .short_review_area .grade_area .graph_mask {
-    display: inline-block;
+    display: inline-flex;
     width: 78px;
     height: 14px;
     background-position: 0 -61px

@@ -3,13 +3,19 @@ var categoryId= 0;
 var startPageIndex =0;
 var length;
 
-function AjaxCategory(){
-	var oReq = new XMLHttpRequest();
-	var url = "api/categories";
+document.addEventListener("DOMContentLoaded",function(){
+	bubbling();
+	ajaxCategory();
+	ajaxProducts();
+});
+
+function ajaxCategory(){
+	let oReq = new XMLHttpRequest();
+	const url = "api/categories";
 	
 	oReq.addEventListener("load",function(){
-		json = JSON.parse(this.responseText);
-		categoryList = json.categoryList;
+		let json = JSON.parse(this.responseText);
+		let categoryList = json.categoryList;
 		
 		templatingCategory(categoryList);
 	});
@@ -18,21 +24,20 @@ function AjaxCategory(){
 	oReq.send();
 }
 
-function AjaxProducts(){
+function ajaxProducts(){
 	
-	var oReq = new XMLHttpRequest();
-	var url = "api/products";
+	let oReq = new XMLHttpRequest();
+	const url = "api/products";
 	
 	oReq.addEventListener("load",function(){
 		
-		json = JSON.parse(this.responseText);
-		productList = json.productList;
-		totalCount = json.totalCount;
+		let json = JSON.parse(this.responseText);
+		let productList = json.productList;
+		let totalCount = json.totalCount;
 		
 	    pageStartList = json.pageStartList;
 	    length = pageStartList.length;
         startPageIndex++;
-
         templatingProduct(productList);
         templatingCount(totalCount);
 	});
@@ -41,25 +46,20 @@ function AjaxProducts(){
 	oReq.send();
 }
 
-function searchAnchorActive(){
-	var target = document.querySelector(".anchor active").parentNode;
-    categoryId = target.dataset.category;
-}
 
-function bubbling (){
-
+function bubbling(){
 	let categoryListTab = document.querySelector("#event_tab");
 	categoryListTab.addEventListener("click", function(evt){ 
 		
 		if(evt.target.tagName === "SPAN"){
 			
-		  var nowActive = document.getElementsByClassName("anchor active")
+		  let nowActive = document.getElementsByClassName("anchor active")
 		  nowActive[0].className = "anchor";
 		  
-		  var clickStatus = evt.target.parentNode; 
+		  let clickStatus = evt.target.parentNode; 
 		  clickStatus.className = "anchor active";
 		 
-		  var Li = evt.target.parentNode.parentNode;
+		  let Li = evt.target.parentNode.parentNode;
 		  
 		  categoryId = Li.dataset.category;
 		  startPageIndex =0;
@@ -67,50 +67,47 @@ function bubbling (){
 		  
 		}else if(evt.target.tagName === "A"){
 			
-		  var nowActive = document.getElementsByClassName("anchor active")
+		  let nowActive = document.getElementsByClassName("anchor active")
 		  nowActive[0].className = "anchor";
 		  
-		  var clickStatus = evt.target; 
+		  let clickStatus = evt.target; 
 		  clickStatus.className = "anchor active";
 		  
-		  var Li = evt.target.parentNode;
+		  let Li = evt.target.parentNode;
 		  categoryId = Li.dataset.category;
 		  startPageIndex = 0;
 		  
-		  clickCategoryProductAjax(startPageIndex,categoryId);
+		  clickCategoryProductAjax(categoryId);
 	}});
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-	bubbling();
-});
 
 var moreBtn =  document.getElementById("moreBtn");
 moreBtn.addEventListener("click", function(){
-	  ClickMoreAjax(pageStartList,categoryId);
+	  clickMoreAjax(pageStartList,categoryId);
 });	
 
-function clickCategoryProductAjax(startPageIndex,categoryId){
+function clickCategoryProductAjax(categoryId){
 	removeListNode();
 
     if(moreBtn.style.display == "none") moreBtn.style.display = "";
 
-	oReq = new XMLHttpRequest();
-    url = "api/products?categoryId="+categoryId+"&start="+0; 
+		let oReq = new XMLHttpRequest();
+		const url = "api/products?categoryId="+categoryId+"&start="+0; 
 	
-	oReq.addEventListener("load",function(){
-        this.startPageIndex = 0;
-        
-		json = JSON.parse(this.responseText);
-		productList = json.productList;
-		totalCount = json.totalCount;
-
-		pageStartList = json.pageStartList;
-		length = pageStartList.length;
-		
-		templatingProduct(productList);
-		templatingCount(totalCount);	    
-	});
+		oReq.addEventListener("load",function(){
+	        this.startPageIndex = 0;
+	        
+			let json = JSON.parse(this.responseText);
+			let productList = json.productList;
+			let totalCount = json.totalCount;
+	
+			pageStartList = json.pageStartList;
+			length = pageStartList.length;
+			
+			templatingProduct(productList);
+			templatingCount(totalCount);	    
+		});
 	
 	oReq.open("GET",url);
 	oReq.send();
@@ -118,16 +115,16 @@ function clickCategoryProductAjax(startPageIndex,categoryId){
 	
 }
 
-function ClickMoreAjax(pageStartList,categoryId){
+function clickMoreAjax(pageStartList,categoryId){
 
 	if(startPageIndex < length){
 	
-		oReq = new XMLHttpRequest();
-		url = "api/products?categoryId="+categoryId+"&start=" + pageStartList[startPageIndex]; 
+		let oReq = new XMLHttpRequest();
+		const url = "api/products?categoryId="+categoryId+"&start=" + pageStartList[startPageIndex]; 
 
 		oReq.addEventListener("load",function(){
-			 json = JSON.parse(this.responseText);
-			 productList = json.productList;
+			 let json = JSON.parse(this.responseText);
+			 let productList = json.productList;
 		 
 			templatingProduct(productList);
 			
@@ -142,8 +139,8 @@ function ClickMoreAjax(pageStartList,categoryId){
 }
 
 function removeListNode(){
-	var leftList = document.querySelector(".displayProductList_left");
-	var rightList = document.querySelector(".displayProductList_right");
+	let leftList = document.querySelector(".displayProductList_left");
+	let rightList = document.querySelector(".displayProductList_right");
 	
 	while(leftList.hasChildNodes()) leftList.removeChild(leftList.firstChild);
 
@@ -152,66 +149,64 @@ function removeListNode(){
 }
 
 function templatingCategory(categoryList){
-	var categoryHTML = document.querySelector("#categoryItem").innerHTML;
+	const categoryHTML = document.querySelector("#categoryItem").innerHTML;
 	
-	for(var i = 0; i < categoryList.length; i++){
-		var resultHTML = "";
+	for(i = 0; i < categoryList.length; i++){
+		let resultHTML = "";
 		
 		resultHTML += categoryHTML
 				.replace(/{categoryId}/g,categoryList[i].id)
 				.replace(/{categoryName}/g,categoryList[i].name);
 		
-		var categoryLi = document.querySelector("#event_tab");
+		const categoryLi = document.querySelector("#event_tab");
 		categoryLi.insertAdjacentHTML("beforeend",resultHTML);
 	}
 }
 
 function templatingCount(totalCount){
-	var countPlace = document.querySelector(".pink");
+	let countPlace = document.querySelector(".pink");
 	countPlace.innerHTML = "";
 	countPlace.insertAdjacentHTML("afterbegin",totalCount+"개");
 }
 
 function templatingProduct(productList) {
 
-	var productHTML = document.querySelector("#productItem").innerHTML;
-    var limit = 2;
+	let productHTML = document.querySelector("#productItem").innerHTML;
+	const limit = 2;
     
-	for (var i = 0; i < productList.length; i++) {
+	for (i = 0; i < productList.length; i++) {
 
 	    if(i % limit == 0){
-	        var leftResultHTML="";
+	    	let leftResultHTML="";
 	        
 			leftResultHTML += productHTML
 			        .replace(/{productDescription}/g,productList[i].productDescription)
 			        .replace(/{productId}/g, productList[i].productId)
 					.replace(/{productContent}/g, productList[i].productContent)
 					.replace(/{placeName}/g, productList[i].placeName)
-	                .replace(/{productImageUrl}/g, productList[i].productImageUrl);
+	                .replace(/{productImageUrl}/g, productList[i].productImageUrl)
+					.replace(/{displayInfoId}/g, productList[i].displayInfoId);
 	                 
-            var leftLi = document.querySelector(".displayProductList_left");
+			let leftLi = document.querySelector(".displayProductList_left");
             leftLi.insertAdjacentHTML("beforeend", leftResultHTML);
 		         
 	    }
         else {
-	        var rightResultHTML="";
+        	let rightResultHTML="";
 	        
 			rightResultHTML += productHTML
 	               .replace(/{productDescription}/g,productList[i].productDescription)
 	               .replace(/{productId}/g, productList[i].productId)
 			       .replace(/{productContent}/g, productList[i].productContent)
 			       .replace(/{placeName}/g, productList[i].placeName)
-	               .replace(/{productImageUrl}/g, productList[i].productImageUrl);
-	
-           var rightLi = document.querySelector(".displayProductList_right");
+	               .replace(/{productImageUrl}/g, productList[i].productImageUrl)
+				   .replace(/{displayInfoId}/g, productList[i].displayInfoId);
+           
+			let rightLi = document.querySelector(".displayProductList_right");
            rightLi.insertAdjacentHTML("beforeend", rightResultHTML);
                
         }
     }
+	
 }
-
-AjaxCategory();
-AjaxProducts();
-
-
                                                                                                                                              

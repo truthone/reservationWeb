@@ -10,7 +10,8 @@
     <meta name="description" content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
-    <link href="./css/style.css?ver=2" rel="stylesheet">
+    <link href="./css/style.css?ver=3" rel="stylesheet">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
             </header>
         </div>
         <hr>
-        <div class="event">
+      <div class="event">
             <div class="section_visual">
                 <div class="group_visual">
                     <div class="container_visual">
@@ -42,7 +43,7 @@
                         <div>
                             <div class="container_visual" >
                                 <!-- [D] 이전,다음 버튼을 클릭할때마다 캐러셀 형태로 순환 됨 -->
-                                <ul class="visual_img" style=" transform: translateX(0px); transition-duration : 0.5s; width: max-content"> 
+                                <ul class="visual_img" style=" transform: ; transition-duration : ; width: max-content"> 
                                 </ul>
                             </div>
                             <span class="nxt_fix" style="display:none;"></span>
@@ -50,7 +51,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="section_event_tab">
                 <ul id="event_tab" class="event_tab_lst tab_lst_min">
                  <li class="item" data-category="0">
@@ -92,14 +92,10 @@
           <a class="anchor"><span>{categoryName}</span> </a>
        </li>
     </script>
-    
-    <script type="rv-template" id = "moreBtnHTML">
-       <button class="btn" id="moreBtn"><span>더보기</span></button>
-    </script>
-    
+   
     <script type="rv-template" id="productItem">
         <li class="item">
-            <a href="detail/{displayInfoId}" class="item_book">
+            <a href="products/{displayInfoId}" class="item_book" id="{displayInfoId}">
                 <div class="item_preview">
                     <img alt="{productDescription}" class="img_thumb" src="./img/{productImageUrl}">
                     <span class="img_border"></span>
@@ -113,15 +109,16 @@
     </script>
     
     <script type="rv-template" id="promotionItem">
-        <li class="item event" style="float:left; list-style:none; position : relative; width: 414px;" >
+        <li class="item event" id= "{sequence}" style="float:left; list-style:none; width: 414px;" >
            <div class="item event" style="background-image: url(./img/{productImageUrl}); width: 414px;"></div>                             
 	    </li>
     </script>
-</body>
-  <!-- 스크립트 모음 -->
-    <script src="./js/slide.js?ver=3"></script>
+    
+     <!-- 스크립트 모음 -->
     <script src="./js/templatingProducts.js?ver=6"></script>
-    <script src="./js/templatingPromotions.js"></script>
+    <script src="./js/templatingPromotions.js?ver=1"></script>
 
+</body>
+ 
 </html>
  

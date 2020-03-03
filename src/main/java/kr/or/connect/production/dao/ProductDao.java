@@ -19,31 +19,33 @@ import kr.or.connect.production.dto.Product;
 
 @Repository
 public class ProductDao {	 
-		private NamedParameterJdbcTemplate jdbc;
-	    private SimpleJdbcInsert insertAction;
-	    private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
+	private NamedParameterJdbcTemplate jdbc;
+    private SimpleJdbcInsert insertAction;
+    private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
 
-	    public ProductDao(DataSource dataSource) {
-	        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-	        this.insertAction = new SimpleJdbcInsert(dataSource)
-	                .withTableName("product")
-	                .usingGeneratedKeyColumns("id");
-	    }
-	    
-	    public List<Product> selectProductAll(Integer start, Integer limit) {
-	    		Map<String, Integer> params = new HashMap<>();
-	    		params.put("start", start);
-	    		params.put("limit", limit);
-	        return jdbc.query(SELECT_PRODUCT_INFO_ALL, params, rowMapper);
-	        
-	    } 
-
-        public List<Product> selectProductByCategory(Integer start, Integer limit, Integer categoryId) {
-	    		Map<String, Integer> params = new HashMap<>();
-	    		params.put("start", start);
-	    		params.put("categoryId", categoryId);
-	    		params.put("limit", limit);
-            return jdbc.query(SELECT_PRODUCT_INFO_BY_CATEGORY, params, rowMapper);
+    public ProductDao(DataSource dataSource) {
+        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+        this.insertAction = new SimpleJdbcInsert(dataSource)
+            .withTableName("product")
+            .usingGeneratedKeyColumns("id");
+    }
+    
+    public List<Product> selectProductAll(Integer start, Integer limit) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("start", start);
+		params.put("limit", limit);
+		
+        return jdbc.query(SELECT_PRODUCT_INFO_ALL, params, rowMapper);
+        
     } 
+
+    public List<Product> selectProductByCategory(Integer start, Integer limit, Integer categoryId) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("start", start);
+		params.put("categoryId", categoryId);
+		params.put("limit", limit);
+		
+        return jdbc.query(SELECT_PRODUCT_INFO_BY_CATEGORY, params, rowMapper);
+} 
     
 }
