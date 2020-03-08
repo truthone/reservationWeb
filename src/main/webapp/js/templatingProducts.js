@@ -3,6 +3,7 @@ var categoryId= 0;
 var startPageIndex =0;
 var length;
 
+
 document.addEventListener("DOMContentLoaded",function(){
 	bubbling();
 	ajaxCategory();
