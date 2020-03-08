@@ -20,7 +20,6 @@ function ajaxPromtoions(){
 }
 
 function templatingPromotions(promotionList) {
-
 	let promotionHTML = document.querySelector("#promotionItem").innerHTML;
 	let promotionImageList = document.querySelector(".visual_img");
 	const size = promotionList.length;

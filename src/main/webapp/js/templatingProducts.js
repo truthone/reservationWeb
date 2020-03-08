@@ -46,7 +46,6 @@ function ajaxProducts(){
 	oReq.send();
 }
 
-
 function bubbling(){
 	let categoryListTab = document.querySelector("#event_tab");
 	categoryListTab.addEventListener("click", function(evt){ 
@@ -80,7 +79,6 @@ function bubbling(){
 		  clickCategoryProductAjax(categoryId);
 	}});
 }
-
 
 var moreBtn =  document.getElementById("moreBtn");
 moreBtn.addEventListener("click", function(){
