@@ -156,9 +156,11 @@ function templatingProductImage(productImageInfo,displayInfo){
 		})
 		
 		resultHTML += bindProductImageItemTemplate(typeFilteredProductImageInfo[typeFilteredProductImageInfo.length-1]);
+		
 		typeFilteredProductImageInfo.forEach(function(typeFilteredProductImageInfo,index){
 			resultHTML += bindProductImageItemTemplate(typeFilteredProductImageInfo);
 		}); 
+		
 		resultHTML += bindProductImageItemTemplate(typeFilteredProductImageInfo[0]);
 	}else{
 			resultHTML += bindProductImageItemTemplate(productImageInfo[productImageInfo.length-1]);

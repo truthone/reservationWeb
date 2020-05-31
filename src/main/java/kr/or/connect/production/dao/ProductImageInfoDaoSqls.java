@@ -20,5 +20,21 @@ public class ProductImageInfoDaoSqls {
 			"AND display_info.product_id = product_image.product_id\r\n" + 
 			"AND product_image.file_id = file_info.id\r\n"
 			;
+	
+	public static final String SELECT_PRODUCTIMAGE_ONLY_MAINIMAGE =
+			"SELECT \r\n" + 
+			"file_info.file_name AS fileName,\r\n" + 
+			"product_image.product_id AS productId,\r\n" + 
+			"product_image.id AS productImageId,\r\n" + 
+			"file_info.save_file_name AS saveFileName,\r\n" + 
+			"product_image.type\r\n" + 
+			
+			"FROM file_info, product_image ,display_info\r\n" + 
+			
+			"WHERE display_info.id = :displayInfoId\r\n" + 
+			"AND display_info.product_id = product_image.product_id\r\n" + 
+			"AND product_image.file_id = file_info.id\r\n" +
+			"AND type = 'ma' \r\n"
+			;
 
 }

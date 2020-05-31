@@ -9,10 +9,12 @@ import kr.or.connect.production.dao.CommentInfoDao;
 import kr.or.connect.production.dao.DisplayImageInfoDao;
 import kr.or.connect.production.dao.DisplayInfoDao;
 import kr.or.connect.production.dao.ProductImageInfoDao;
+import kr.or.connect.production.dao.ProductPriceInfoDao;
 import kr.or.connect.production.dto.CommentInfo;
 import kr.or.connect.production.dto.DisplayImageInfo;
 import kr.or.connect.production.dto.DisplayInfo;
 import kr.or.connect.production.dto.ProductImageInfo;
+import kr.or.connect.production.dto.ProductPriceInfo;
 import kr.or.connect.production.service.ProductDetailService;
 
 @Service
@@ -30,6 +32,8 @@ public class ProductDetailServiceImpl implements ProductDetailService  {
 	@Autowired
 	CommentInfoDao commentInfoDao;
 	
+	@Autowired
+	ProductPriceInfoDao productPriceInfoDao;
 
 	@Override
 	public List<ProductImageInfo> getProductImageInfoList(Integer displayInfoId) {
@@ -75,4 +79,13 @@ public class ProductDetailServiceImpl implements ProductDetailService  {
 		}		
 	}
 
+	@Override
+	public List<ProductImageInfo> getProductMainImage(Integer displayInfoId){
+		return productImageInfoDao.selectProductMainImage(displayInfoId);
+	}
+	
+	@Override
+	public List<ProductPriceInfo> getProductPriceInfo(Integer displayInfoId){
+		return productPriceInfoDao.selectProductPriceInfo(displayInfoId);
+	}
 }

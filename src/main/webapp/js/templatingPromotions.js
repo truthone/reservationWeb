@@ -1,9 +1,10 @@
 
 document.addEventListener("DOMContentloaded", function(){
-	ajaxPromtoions();
+	ajaxPromotions();
+	console.log("왜안돼");
 });
 
-function ajaxPromtoions(){
+function ajaxPromotions(){
 	let oReq = new XMLHttpRequest();
 	const url = "api/promotions";
 	
@@ -14,7 +15,6 @@ function ajaxPromtoions(){
 		
 		templatingPromotions(promotionList);
 		slideSetting();
-		
 	});
 	oReq.open("GET",url);
 	oReq.send();

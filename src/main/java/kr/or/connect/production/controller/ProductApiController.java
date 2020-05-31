@@ -17,6 +17,7 @@ import kr.or.connect.production.dto.DisplayImageInfo;
 import kr.or.connect.production.dto.DisplayInfo;
 import kr.or.connect.production.dto.Product;
 import kr.or.connect.production.dto.ProductImageInfo;
+import kr.or.connect.production.dto.ProductPriceInfo;
 import kr.or.connect.production.dto.Promotion;
 import kr.or.connect.production.service.CategoryService;
 import kr.or.connect.production.service.ProductDetailService;
@@ -143,4 +144,22 @@ public class ProductApiController {
 		
 		return map;
 	}
+	
+	@GetMapping
+	@RequestMapping(path= "api/products/{displayInfoId}/reserve")
+	public Map<String,Object> productReserve(@PathVariable(name="displayInfoId")int displayInfoId){
+		
+		Map<String, Object> map = new HashMap<>();
+		List<ProductImageInfo> productMainImageInfo = productDetailService.getProductMainImage(displayInfoId);
+		List<DisplayInfo> displayInfo = productDetailService.getDisplayInfo(displayInfoId);		
+		List<ProductPriceInfo> productPriceInfo = productDetailService.getProductPriceInfo(displayInfoId);
+		
+	
+		map.put("productMainImageInfo", productMainImageInfo);
+		map.put("displayInfo", displayInfo);
+		map.put("productPriceInfo", productPriceInfo);
+		
+		return map;
+	}
+
 }

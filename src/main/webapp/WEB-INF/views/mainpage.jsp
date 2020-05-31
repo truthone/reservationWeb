@@ -116,7 +116,7 @@
     
      <!-- 스크립트 모음 -->
     <script src="./js/templatingProducts.js?ver=6"></script>
-    <script src="./js/templatingPromotions.js?ver=1"></script>
+    <script src="./js/templatingPromotions.js?ver=2"></script>
 
 </body>
  

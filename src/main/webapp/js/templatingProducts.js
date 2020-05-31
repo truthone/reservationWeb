@@ -77,7 +77,7 @@ function bubbling(){
 		  categoryId = Li.dataset.category;
 		  startPageIndex = 0;
 		  
-		  clickCategoryProductAjax(categoryId);
+		  clickCategoryProductAjax(startPageIndex,categoryId);
 	}});
 }
 

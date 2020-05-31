@@ -1,34 +1,35 @@
 package kr.or.connect.production.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import kr.or.connect.production.dto.ReservationInfo;
+import kr.or.connect.production.service.ReservationService;
 
 @Controller
+
 public class ReservationController {
-
-	@RequestMapping(path="/mainpage")
-	public String productList(@RequestParam(name="start", required=false, defaultValue="0") int start,
-			   ModelMap model) {
-
-		return "mainpage";
-	}	
+	@Autowired
+	ReservationService reservationService;
 	
-
-	@RequestMapping(path="products/{displayInfoId}")
-	public String detail(@PathVariable(name="displayInfoId")int displayInfoId,
-			   ModelMap model) {
-		model.addAttribute("displayInfoId",displayInfoId);
-		return "detail";
+	// post api 예약하기
+	@PostMapping(path="api/reservations")
+	public String reservation(@ModelAttribute ReservationInfo reservationInfo,
+				HttpServletRequest request) {
+			    
+		Map<String,Object> map = new HashMap<>();
+		
+		ReservationInfo resultInfo = reservationService.addReservation(reservationInfo);
+		
+		map.put("resultInfo",resultInfo);
+		System.out.println(resultInfo);
+		return "redirect:../mainpage";
 	}
-	
-	@RequestMapping(path="products/{displayInfoId}/review")
-	public String review(@PathVariable(name="displayInfoId")int displayInfoId,
-			   ModelMap model) {
-		model.addAttribute("displayInfoId",displayInfoId);
-		return "review";
-	}
-	
 }

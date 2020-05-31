@@ -1,6 +1,7 @@
 package kr.or.connect.production.dao;
 
 import static kr.or.connect.production.dao.ProductImageInfoDaoSqls.SELECT_PRODUCTIMAGE_INFO;
+import static kr.or.connect.production.dao.ProductImageInfoDaoSqls.SELECT_PRODUCTIMAGE_ONLY_MAINIMAGE;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,9 +30,14 @@ public class ProductImageInfoDao {
                 .usingGeneratedKeyColumns("id");
     }
 	public List<ProductImageInfo> selectProductImageInfo(Integer displayInfoId){
-	Map<String, Integer> params = new HashMap<>();
-	params.put("displayInfoId", displayInfoId);
-
-	return jdbc.query(SELECT_PRODUCTIMAGE_INFO, params,rowMapper);
+		Map<String, Integer> params = new HashMap<>();
+		params.put("displayInfoId", displayInfoId);
+		return jdbc.query(SELECT_PRODUCTIMAGE_INFO, params,rowMapper);
+	}
+	
+	public List<ProductImageInfo> selectProductMainImage(Integer displayInfoId){
+		Map<String, Integer> params = new HashMap<>();
+		params.put("displayInfoId", displayInfoId);
+		return jdbc.query(SELECT_PRODUCTIMAGE_ONLY_MAINIMAGE, params,rowMapper);
 	}
 }

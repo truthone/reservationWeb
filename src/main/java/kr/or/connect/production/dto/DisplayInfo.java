@@ -1,7 +1,7 @@
 package kr.or.connect.production.dto;
 
 public class DisplayInfo {
-	private int caegoryId;
+	private int categoryId;
 	private String categoryName;
 	private String createDate;
 	private String modifyDate;
@@ -15,11 +15,11 @@ public class DisplayInfo {
 	private int productId;
 	private String tel;
 	
-	public int getCaegoryId() {
-		return caegoryId;
+	public int getCategoryId() {
+		return categoryId;
 	}
 	public void setCaegoryId(int caegoryId) {
-		this.caegoryId = caegoryId;
+		this.categoryId = caegoryId;
 	}
 	public String getCategoryName() {
 		return categoryName;
