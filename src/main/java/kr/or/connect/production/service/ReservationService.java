@@ -7,7 +7,7 @@ import kr.or.connect.production.dto.ReservationInfoPrice;
 
 public interface ReservationService {
 	public List<ReservationInfo> getReservationInfoes(String email);
-	public ReservationInfo addReservation(ReservationInfo reservationInfo);
-	public ReservationInfoPrice addReservationInfoPrice(ReservationInfoPrice reservationInfoPrice );
+	public Long addReservation(ReservationInfo reservationInfo);
+	public ReservationInfoPrice addReservationInfoPrice(ReservationInfoPrice reservationInfoPrice);
 	public int deleteReservationInfo(); 
 }

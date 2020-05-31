@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 
@@ -57,7 +58,7 @@
                         <div class="form_wrap">
                             <h3 class="out_tit">예매자 정보</h3>
                             <div class="agreement_nessasary help_txt"> <span class="spr_book ico_nessasary"></span> <span>필수입력</span> </div>
-                            <form class="form_horizontal" action = "../../api/reservations" method = "post" id = "reserveInfoForm" >
+                            <form:form  modelAttribute="reservationInfo" class="form_horizontal" action = "../../api/reservations" method = "post" id = "reserveInfoForm" >
                                 <div class="inline_form"> <label class="label" for="name"> <span class="spr_book ico_nessasary">필수</span> <span>예매자</span> </label>
                                     <div class="inline_control"> <input type="text" name="reservationName" id="name" class="text" placeholder="네이버" maxlength="17">
                                     	<div class="warning_msg" id="warning_msg_name">형식이 틀렸거나 너무 짧아요</div> 
@@ -81,7 +82,7 @@
                                         <span id="totalCount">0</span>매</p>
                                     </div>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                     <div class="section_booking_agreement">
@@ -143,12 +144,13 @@
                 </div>	
 	</script>
 <script type="handlebarTemplate" id ="Section_ticketQuantity">
-
+  
 	<div class="qty" id= "{{id}}">
 	    <div class="count_control">
 	       <!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input에 disabled 각각 추가, 수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
 	       <div class="clearfix">
-	           <a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" name = "{{priceType}}" value="0" readonly title="수량">
+	           <a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"></a> 
+				<input type="tel" class="count_control_input disabled" name = "{{priceType}}" value="0" readonly title="수량">
 	           <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
 	           </a>
 	       </div>
@@ -158,6 +160,7 @@
 	   <div class="qty_info_icon"> <strong class="product_amount"> <span>{{priceStringType}}</span> 
 	   	</strong> <strong class="product_price"> <span class="price">{{price}}</span> <span class="price_type">원</span> </strong> <em class="product_dsc">{{price}}원 ({{discountRate}}% 할인가)</em> </div>  
 	</div>
+
 	</script>
 	
 <!-- 스크립트 모음 -->

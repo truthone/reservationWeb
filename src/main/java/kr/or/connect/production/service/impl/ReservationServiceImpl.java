@@ -22,7 +22,7 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	@Transactional(readOnly = false)
-	public ReservationInfo addReservation(ReservationInfo reservationInfo) {
+	public Long addReservation(ReservationInfo reservationInfo) {
 		int cancleFlag = 0;
 		reservationInfo.setCreateDate(new Date());
 		reservationInfo.setModifyDate(new Date());
@@ -30,12 +30,12 @@ public class ReservationServiceImpl implements ReservationService {
 		reservationInfo.setCancelFlag(cancleFlag);
 		Long reservationInfoId = reservationInfoDao.insertReservationInfo(reservationInfo);
 		reservationInfo.setReservationInfoId(reservationInfoId);
-		return reservationInfo;
+		return reservationInfoId;
 	}
 	
 	@Override
 	@Transactional(readOnly = false)
-	public ReservationInfoPrice addReservationInfoPrice(ReservationInfoPrice reservationInfoPrice ) {
+	public ReservationInfoPrice addReservationInfoPrice(ReservationInfoPrice reservationInfoPrice){
 		Long reservationInfoPriceId = reservationInfoPriceDao.insertReservationInfoPrice(reservationInfoPrice);
 		reservationInfoPrice.setReservationInfoId(reservationInfoPriceId);
 		return reservationInfoPrice;

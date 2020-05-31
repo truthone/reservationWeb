@@ -1,6 +1,7 @@
 package kr.or.connect.production.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class ReservationInfo {
 	
@@ -14,7 +15,15 @@ public class ReservationInfo {
 	private int cancelFlag;
 	private Date createDate;
 	private Date modifyDate;
+	private List<ReservationInfoPrice> reservationInfoPrices;
 	
+
+	public List<ReservationInfoPrice> getReservationInfoPrices() {
+		return reservationInfoPrices;
+	}
+	public void setReservationInfoPrices(List<ReservationInfoPrice> reservationInfoPrices) {
+		this.reservationInfoPrices = reservationInfoPrices;
+	}
 	public Long getReservationInfoId() {
 		return reservationInfoId;
 	}
@@ -75,14 +84,16 @@ public class ReservationInfo {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	
 	@Override
 	public String toString() {
 		return "ReservationInfo [reservationInfoId=" + reservationInfoId + ", productId=" + productId
 				+ ", displayInfoId=" + displayInfoId + ", reservationName=" + reservationName + ", reservationTel="
 				+ reservationTel + ", reservationEmail=" + reservationEmail + ", reservationDate=" + reservationDate
-				+ ", cancelFlag=" + cancelFlag + ", createDate=" + createDate + ", modifyDate=" + modifyDate + "]";
+				+ ", cancelFlag=" + cancelFlag + ", createDate=" + createDate + ", modifyDate=" + modifyDate
+				+ ", reservationInfoPrices=" + reservationInfoPrices + "]";
 	}
+	
+
 
 	
 }

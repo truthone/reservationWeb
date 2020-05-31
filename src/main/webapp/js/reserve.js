@@ -48,6 +48,8 @@ function templatingIdDataForSubmit(displayInfoId,productId){
 	document.querySelector(".form_horizontal").appendChild(productIdInput);
 	document.querySelector(".form_horizontal").appendChild(countInput);
 	
+	
+	
 }
 
 function checkingFormValidatation(){
@@ -134,8 +136,8 @@ checkSubmitValid.prototype = {
 		else return false;
 	},
 	
-	checkingAllCondition : function(nameValue, emailValue, telValue){	
-		let emailValid =  this.emailValidTest(emailValue);
+	checkingAllCondition : function(nameValue, emailValue, telValue){
+		let emailValid = this.emailValidTest(emailValue);
 		let telValid = this.telValidTest(telValue);
 		let agreementValid = $("input:checkbox[id='chk3']").prop("checked");
 		
@@ -269,24 +271,29 @@ countControlTap.prototype = {
 }
 
 function addPriceInfo(){
-	debugger;
-	const priceTabs = $(".individual_price on_color");
+	const priceTabs = document.getElementsByClassName("individual_price on_color");
 	
-	priceTabs.forEach(function(priceTabs, index){
+	
+	for(let i =0 ; i < priceTabs.length; i++){
+		const countValue = priceTabs[i].previousElementSibling.children[1].value;
+		const priceId = priceTabs[i].parentElement.parentElement.id;
+		
+		let reservationPriceIdInput = document.createElement('input');
 		let reservationPriceCountInput = document.createElement('input');
-		let reservationPriceIdInput = doucument.createElement('input');
+		
+		reservationPriceIdInput.setAttribute("type", "hidden");
+		reservationPriceIdInput.setAttribute("name", "reservationInfoPrices["+i+"]"+".productPriceId");
+		reservationPriceIdInput.setAttribute("value", priceId);
 		
 		reservationPriceCountInput.setAttribute("type", "hidden");
-		reservationPriceCountInput.setAttribute("name", "qty[0][count]");
-		reservationPriceCountInput.setAttribute("value", 100);
+		reservationPriceCountInput.setAttribute("name", "reservationInfoPrices["+i+"]"+".count");
+		reservationPriceCountInput.setAttribute("value", countValue);
 		
-		reservationPriceCountInput.setAttribute("type", "hidden");
-		reservationPriceCountInput.setAttribute("name", "qty[0][priceId]");
-		reservationPriceCountInput.setAttribute("value", 1);
-		
-		document.querySelector(".form_horizontal").appendChild(reservationPriceCountInput);
 		document.querySelector(".form_horizontal").appendChild(reservationPriceIdInput);
-	});
+		document.querySelector(".form_horizontal").appendChild(reservationPriceCountInput);
+		
+	}
+		
 }
 
 

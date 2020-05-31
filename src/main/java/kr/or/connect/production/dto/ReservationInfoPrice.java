@@ -33,5 +33,12 @@ public class ReservationInfoPrice {
 		this.count = count;
 	}
 	
+	@Override
+	public String toString() {
+		return "ReservationInfoPrice [reservationInfoPriceId=" + reservationInfoPriceId + ", reservationInfoId="
+				+ reservationInfoId + ", productPriceId=" + productPriceId + ", count=" + count + "]";
+	}
+	
+	
 	
 }
