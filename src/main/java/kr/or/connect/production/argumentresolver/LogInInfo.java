@@ -3,10 +3,10 @@ package kr.or.connect.production.argumentresolver;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HeaderInfo {
-	private Map <String, String> map;
+public class LogInInfo {
+	private Map <String, String> map; 
 	
-	public HeaderInfo() {
+	public LogInInfo() {
 		map = new HashMap<>();
 	}
 	

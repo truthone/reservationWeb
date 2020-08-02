@@ -31,9 +31,9 @@ public class CommentInfoDao{
 				.usingGeneratedKeyColumns("id");
 	}
 	
-	public List<CommentInfo> selectCommentInfo( Integer displayInfoId){
+	public List<CommentInfo> selectCommentInfo( Long displayInfoId){
 		List<CommentInfo> commentInfo = null ;
-		Map<String,Integer> params = new HashMap<>();
+		Map<String,Long> params = new HashMap<>();
 		params.put("displayInfoId", displayInfoId);
 		
 		if(jdbc.query(SELECT_COMMENT_INFO, params, rowMapper) != null) {
@@ -42,9 +42,9 @@ public class CommentInfoDao{
 		return commentInfo ;
 	}
 	
-	public int countCommentInfo(Integer displayInfoId) {
+	public int countCommentInfo(Long displayInfoId) {
 		 int countcommentInfo  = 0;
-		 Map<String,Integer> params = new HashMap<>();
+		 Map<String,Long> params = new HashMap<>();
 		 params.put("displayInfoId", displayInfoId);
 		 
 		 if(jdbc.queryForObject(COUNT_COMMENT_INFO, params, Integer.class) != null) {
@@ -53,9 +53,9 @@ public class CommentInfoDao{
 		 return countcommentInfo;
 	}
 	
-	public double getcommenTotalScore(Integer displayInfoId) {
+	public double getcommenTotalScore(Long displayInfoId) {
 		 double commentTotlaScore = 0.0;
-		 Map<String,Integer> params = new HashMap<>();
+		 Map<String,Long> params = new HashMap<>();
 		 params.put("displayInfoId", displayInfoId);
 		 
 		 if(jdbc.queryForObject(TOTAL_SCORE_OF_COMMENT, params, Integer.class) != null) {

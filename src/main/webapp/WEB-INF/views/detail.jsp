@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="ko">
@@ -28,7 +29,9 @@
                     <a href="../mainpage" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
                     <a href="../mainpage" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                 </h1>
-                <a href="../myreservation" class="btn_my"> <span title="예약확인">예약확인</span> </a>
+                <c:if test = "${sessionScope.reservationEmail == null}"><a href="/reservation/bookinglogin" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a></c:if>
+                <c:if test = "${sessionScope.reservationEmail != null}"><a href="/reservation/myreservation" class="btn_my"> 
+                	<span class="viewReservation" title="이메일정보">${sessionScope.reservationEmail}</span> </a></c:if> 
             </header>
         </div>
         <div class="ct main">
@@ -39,7 +42,9 @@
                             <a href="../mainpage" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
                             <a href="../mainpage" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                         </h1>
-                        <a href="../myreservation" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a>
+                    	 <c:if test = "${sessionScope.reservationEmail == null}"><a href="/reservation/bookinglogin" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a></c:if>
+               			 <c:if test = "${sessionScope.reservationEmail != null}"><a href="/reservation/myreservation" class="btn_my"> 
+                			<span class="viewReservation" title="이메일정보">${sessionScope.reservationEmail}</span> </a></c:if> 
                     </header>
                     <div class="pagination">
                         <div class="bg_pagination"></div>
@@ -253,5 +258,4 @@
 		
     <!-- 스크립트 모음 -->
     <script src="../js/templatingDetail.js?ver=1"></script>
-
 </html>

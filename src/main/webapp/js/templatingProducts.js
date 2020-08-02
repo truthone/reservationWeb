@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
 function ajaxCategory(){
 	let oReq = new XMLHttpRequest();
-	const url = "api/categories";
+	const url = "/reservation/api/categories";
 	
 	oReq.addEventListener("load",function(){
 		let json = JSON.parse(this.responseText);
@@ -28,7 +28,7 @@ function ajaxCategory(){
 function ajaxProducts(){
 	
 	let oReq = new XMLHttpRequest();
-	const url = "api/products";
+	const url = "/reservation/api/products";
 	
 	oReq.addEventListener("load",function(){
 		
@@ -86,7 +86,7 @@ moreBtn.addEventListener("click", function(){
 	  clickMoreAjax(pageStartList,categoryId);
 });	
 
-function clickCategoryProductAjax(categoryId){
+function clickCategoryProductAjax(startPageIndex,categoryId){
 	removeListNode();
 
     if(moreBtn.style.display == "none") moreBtn.style.display = "";

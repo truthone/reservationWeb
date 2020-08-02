@@ -29,8 +29,8 @@ public class DisplayImageInfoDao {
                 .usingGeneratedKeyColumns("id");
     }
 
-	public List<DisplayImageInfo> selectDisplayImageInfo(Integer displayInfoId){
-		Map<String, Integer> params = new HashMap<>();
+	public List<DisplayImageInfo> selectDisplayImageInfo(Long displayInfoId){
+		Map<String, Long> params = new HashMap<>();
 		params.put("displayInfoId", displayInfoId);
 		return jdbc.query(SELECT_DISPLAYINFOIMAGE_INFO, params,rowMapper);
 	}

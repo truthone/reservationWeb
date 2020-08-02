@@ -1,7 +1,7 @@
 package kr.or.connect.production.dto;
 
 public class CommentInfo {
-	int id;
+	Long id;
 	String comment; 
 	String reservationEmail;
 	String reservationDate;
@@ -27,10 +27,10 @@ public class CommentInfo {
 	public void setReservationEmail(String reservationEmail) {
 		this.reservationEmail = reservationEmail;
 	}
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getComment() {

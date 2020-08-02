@@ -1,4 +1,4 @@
-package kr.or.connect.production.controller;
+package kr.or.connect.production.apiController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +38,7 @@ public class ProductApiController {
 	ProductDetailService productDetailService;
 	
 		
-	@GetMapping
-	@RequestMapping(path = "api/categories")
+	@GetMapping(path = "/api/categories")
 	public Map<String, Object> Categories(){
 		List<Category> categoryList = categoryService.categories();
 		Map<String, Object> map = new HashMap<>();
@@ -49,8 +48,7 @@ public class ProductApiController {
 		
 	}
 	
-	@GetMapping
-	@RequestMapping(path = "api/promotions")
+	@GetMapping(path = "/api/promotions")
 	public Map<String, Object> Promotions(){
 	    List<Promotion> promotionList = promotionService.getPromotionInfo();
 	    Map<String, Object> map = new HashMap<>();
@@ -61,7 +59,7 @@ public class ProductApiController {
 	}
 	
 	@GetMapping
-	@RequestMapping(path = "api/products")
+	@RequestMapping(path = "/api/products")
 	 public Map<String, Object> Products(
 			 @RequestParam(name="start", required=false, defaultValue="0") int start,		 
 	         @RequestParam(name="categoryId", required=false, defaultValue="0") int categoryId){
@@ -106,9 +104,8 @@ public class ProductApiController {
 			return map;
 	 }
 	
-	@GetMapping
-	@RequestMapping(path= "products/api/products/{displayInfoId}")
-	public Map<String,Object> productDetail(@PathVariable(name="displayInfoId")int displayInfoId){
+	@GetMapping(path= "/api/products/{displayInfoId}")
+	public Map<String,Object> productDetail(@PathVariable(name="displayInfoId")Long displayInfoId){
 		
 		Map<String, Object> map = new HashMap<>();
 		List<ProductImageInfo> productImageInfo = productDetailService.getProductImageInfoList(displayInfoId);
@@ -124,13 +121,11 @@ public class ProductApiController {
 		map.put("commentInfo", commentInfo);
 		map.put("averageScore",averageScore);
 		map.put("commentCount", commentCount);
-		
 		return map;
 	}
 	
-	@GetMapping
-	@RequestMapping(path= "products/api/products/{displayInfoId}/review")
-	public Map<String,Object> productReview(@PathVariable(name="displayInfoId")int displayInfoId){
+	@GetMapping(path= "/api/products/{displayInfoId}/review")
+	public Map<String,Object> productReview(@PathVariable(name="displayInfoId")Long displayInfoId){
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -145,9 +140,8 @@ public class ProductApiController {
 		return map;
 	}
 	
-	@GetMapping
-	@RequestMapping(path= "api/products/{displayInfoId}/reserve")
-	public Map<String,Object> productReserve(@PathVariable(name="displayInfoId")int displayInfoId){
+	@GetMapping(path= "/api/products/{displayInfoId}/reserve")
+	public Map<String,Object> productReserve(@PathVariable(name="displayInfoId")Long displayInfoId){
 		
 		Map<String, Object> map = new HashMap<>();
 		List<ProductImageInfo> productMainImageInfo = productDetailService.getProductMainImage(displayInfoId);

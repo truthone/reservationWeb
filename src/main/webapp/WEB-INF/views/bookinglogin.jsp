@@ -1,9 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!-- saved from url=(0042)https://m.booking.naver.com/booked/confirm -->
 <html lang="ko" class="no-js" >
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+      <style type="text/css">@charset "UTF-8";
+      [ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
       <!--<base href="/">-->
       <base href=".">
       <!--[if IE]>
@@ -15,6 +19,7 @@
          })();
       </script>
       <![endif]-->  
+      <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=Edge">
       <meta http-equiv="cache-control" content="no-cache">
       <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
@@ -23,8 +28,11 @@
       <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
       <meta name="format-detection" content="telephone=no, address=no, email=no">
       <title translate="CM-NBOOKING">네이버 예약</title>
-      <link rel="stylesheet" href="../css/bookinglogin.css">
+      <link rel="stylesheet" href="./css/bookinglogin.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js"></script>
    </head>
+   
    <body class="biz  ko" >
       
       <app>
@@ -39,12 +47,13 @@
                   <h1 class="login_header"> <a href="./mainpage.html"  class="nbooking_logo spr_bi txt_logo" > <span translate="CM-NBOOKING">네이버 예약</span> </a> </h1>
                   <!---->
                   <div >
-                     <form name="confirm_form" class="ng-pristine ng-valid" id="form1" action="./myreservation.html">
+                     <form name="confirm_form" class="ng-pristine ng-valid" id="form1" action="/reservation/login" method="post">
                         <h2 class="login_header_sub border_bottom"> <span translate="CM-NON_MEMBER_BK_CONFIRMATION">비회원 예약확인</span> </h2>
                         <div class="login_form"> 
                            <label class="label_form" for="resrv_id" translate="CM-BOOKING_NUMBER">예약자 이메일 입력</label> 
-                           <input type="text" class="login_input ng-pristine ng-untouched ng-valid ng-empty" id="resrv_id" name="resrv_email" aria-invalid="false" placeholder="crong@naver.com" title="예매자이메일">  </div>
+                           <input type="text" class="login_input ng-pristine ng-untouched ng-valid ng-empty" id="reservationEmail" name="reservationEmail" aria-invalid="false" placeholder="crong@naver.com" title="예매자이메일">  </div>
                         <button type="submit" form="form1" class="login_btn confirm" > <span translate="CM-MY_BOOKING_CHECK">내 예약 확인</span> </button> <!----> <!----> <!----> <!----> 
+                    	<span style="color: red">${errorMessage}</span>
                      </form>
                   </div>
                   <!----> <!----> 
@@ -102,6 +111,7 @@
          </translater-modal>
       </app>
 
-       
    </body>
+     <!-- 스크립트 모음 -->
+    <script src="js/login.js?ver=1"></script>  
 </html>

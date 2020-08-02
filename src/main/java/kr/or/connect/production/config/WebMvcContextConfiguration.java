@@ -1,8 +1,12 @@
 package kr.or.connect.production.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -10,9 +14,12 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import kr.or.connect.production.argumentresolver.LogInInfoMapArgumentResolver;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "kr.or.connect.production.controller" })
+@ComponentScan(basePackages = { "kr.or.connect.production.apiController" })
 public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
 
     @Override
@@ -39,4 +46,23 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
         resolver.setSuffix(".jsp");
         return resolver;
     }
+    
+//    @Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//    		registry.addInterceptor(new LoginInterceptor());
+//	}
+    
+    @Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+    		System.out.println("아규먼트 리졸버 등록..");
+		argumentResolvers.add(new LogInInfoMapArgumentResolver());
+	}
+    
+    @Bean
+    public MultipartResolver multipartResolver() {
+        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10
+        return multipartResolver;
+    }
+    
 }

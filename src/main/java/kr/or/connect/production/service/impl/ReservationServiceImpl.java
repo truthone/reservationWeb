@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.connect.production.dao.ReservationInfoDao;
 import kr.or.connect.production.dao.ReservationInfoPriceDao;
+import kr.or.connect.production.dto.MyReservationPriceInfoAndCount;
 import kr.or.connect.production.dto.ReservationInfo;
 import kr.or.connect.production.dto.ReservationInfoPrice;
 import kr.or.connect.production.service.ReservationService;
@@ -42,15 +43,38 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public List<ReservationInfo> getReservationInfoes(String email) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReservationInfo> getMyReservationInfo(String reservationEmail) {
+		List<ReservationInfo> list = reservationInfoDao.selectMyReservationByEmail(reservationEmail);
+		return list;
+	}
+	
+	@Override
+	public List<ReservationInfo> getReservationInfo(Long reservationId) {
+		List<ReservationInfo> list = reservationInfoDao.selectReservationById(reservationId);
+		return list;
+	}
+
+
+	@Override
+	public List<MyReservationPriceInfoAndCount> getMyReservationPriceInfo(Long reservationId) {
+		List<MyReservationPriceInfoAndCount> list = reservationInfoPriceDao.selectMyReservationPrice(reservationId);
+		return list;
 	}
 
 	@Override
-	public int deleteReservationInfo() {
-		// TODO Auto-generated method stub
-		return 0;
+	@Transactional(readOnly = false)
+	public Integer cancelReservation(Integer reservationId) {
+		Integer updateCount = reservationInfoDao.updateReservationCancleFlag(reservationId);
+		return updateCount;
 	}
 
+	@Override
+	public boolean hasReservationInfoByEmail(String reservationEmail) {
+		List<ReservationInfo> list = getMyReservationInfo(reservationEmail);
+		if(list.size() > 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }

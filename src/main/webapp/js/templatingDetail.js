@@ -6,7 +6,7 @@ window.addEventListener("load",function(){
 });
 
 function productDetailAjax(displayInfoId){
-	const url = "api/products/"+displayInfoId;
+	const url = "/reservation/api/products/"+displayInfoId;
 	var oReq = new XMLHttpRequest();
 	
 	oReq.addEventListener("load",function(){
@@ -18,24 +18,39 @@ function productDetailAjax(displayInfoId){
 		let averageScore = json.averageScore;
 		let commentCount = json.commentCount;
 		
-        templatingProductImage(productImageInfo,displayInfo);
+        templatingProductImage(productImageInfo,displayInfo,4);
         templatingDisplayInfo(displayInfo,displayImageInfo);
-        templatingComments(displayInfoId,commentInfo,averageScore,commentCount);
+        templatingComments(displayInfoId,commentInfo,averageScore,commentCount,3);
         
         slideInfinityProductImage();
 	});
 	
 	oReq.open("GET",url);
 	oReq.send();
-	
 }
 
 function slideInfinityProductImage(){
 	const imageList = document.querySelector(".visual_img");
-	let firstCloneItem = imageList.lastElementChild;
-	let firstItem = imageList.children[1];
-	let lastItem = imageList.children[imageList.children.length-2];
+//	let firstCloneItem = imageList.lastElementChild;
+//	let firstItem = imageList.children[1];
+//	let lastItem = imageList.children[imageList.children.length-2];
+//	let lastCloneItem = imageList.firstElementChild;
+	debugger;
+	let c = imageList.lastElementChild.innerHTML;
+	let d = imageList.firstElementChild.innerHTML;
+	let liTag = document.createElement("LI");
+	let firstClone = liTag.appendChild(d);
+	imageList.appendChild(firstClone);
+	
+//	imageList.insertAdjacentElement("afterbegin", c);
+//	imageList.insertAdjacentHTML("beforeend", d);
+	
 	let lastCloneItem = imageList.firstElementChild;
+	let firstItem = imageList.children[1];
+	let lastItem = imageList.children[imageList.children.length-2];;
+	let firstCloneItem = imageList.lastElementChild;
+	
+	
 	
 	firstCloneItem.id = "FIRSTCLONE";
 	firstItem.id = "FIRST";
@@ -48,6 +63,7 @@ function slideInfinityProductImage(){
 	let lastIndex = imageList.children.length-2;
 	let firstIndex = 1;
 	
+	debugger;
 	$("#nowIndex").text(nowImageIndex);
 	imageList.style.transform = "translateX(" + (firstIndex*(-itemWidth)) + "px)";
 	
@@ -95,10 +111,10 @@ function slideInfinityProductImage(){
 
 function slideProductImage(){
 	const imageList = document.querySelector(".visual_img");
-	let firstItem = imageList. firstElementChild;
-	let LastItem = imageList.lastElementChild;
+	let firstItem = imageList.firstElementChild;
+	let lastItem = imageList.lastElementChild;
 	firstItem.id = "FIRST";
-	LastItem.id = "LAST";
+	lastItem.id = "LAST";
 	const itemWidth = $(".container_visual").css("width").replace("px","");
 	let nowImageIndex = 0;
 	let totalIndex = imageList.length;
@@ -137,44 +153,65 @@ function slideProductImage(){
 	});
 }
 
-function templatingProductImage(productImageInfo,displayInfo){
+templating = {
+		
+		bindingTemplate : function(bindingPlace, bindingData){
+			let template = Handlebars.compile(bindingPlace);
+			return template(bindingData);
+		},
+		
+		insertResultHTML : function(insertList,resultHTML){
+			insertList.insertAdjacentHTML("beforeend",resultHTML);
+		}
+}
+
+function filterImageInfoListByType(productImageInfo, typeString){
+	let typeFilteredInfoList = 
+		productImageInfo.filter(function(imageInfo){
+			return imageInfo.type == typeString;
+		});
+	return typeFilteredInfoList;
+}
+	
+function orderImageSequence(typeMainImageInfoList, typeEtcImageInfoList, LIMIT){
+	let orderedList = new Array();
+	let etcImagecount = 0;
+	let mainImageCount = 0;
+
+	typeMainImageInfoList.forEach(function(index){
+		orderedList.push(index);
+		mainImageCount++;
+	});
+	
+	typeEtcImageInfoList.forEach(function(index){
+		while(etcImagecount < LIMIT - mainImageCount){
+			orderedList.push(index);
+			etcImagecount++;
+		}
+	});
+	
+	return orderedList;
+}
+
+function templatingProductImage(productImageInfo,displayInfo,LIMIT){
 	const productImageList = document.querySelector(".visual_img");
 	const productImageItemTemplate = document.querySelector("#productImageItem").innerHTML;
-	let bindProductImageItemTemplate= Handlebars.compile(productImageItemTemplate);
 	let resultHTML="";
-	const LIMIT = 2;
-	let count = 1;
+	let typeMainImageInfoList = filterImageInfoListByType(productImageInfo, "ma");
+	let typeEtcImageInfoList = filterImageInfoListByType(productImageInfo, "et");
+	let orderedAndFilteredList =  orderImageSequence(typeMainImageInfoList,typeEtcImageInfoList,LIMIT);
+	const total =  orderedAndFilteredList.length;
 	
-	if( 1 < productImageInfo.length){
-		
-		let typeFilteredProductImageInfo = productImageInfo.filter(function(imageInfo){
-			if(imageInfo.type == "et" && count < LIMIT){
-				count++;
-				return imageInfo;
-			}
-		    return imageInfo.type == "ma";
-		})
-		
-		resultHTML += bindProductImageItemTemplate(typeFilteredProductImageInfo[typeFilteredProductImageInfo.length-1]);
-		
-		typeFilteredProductImageInfo.forEach(function(typeFilteredProductImageInfo,index){
-			resultHTML += bindProductImageItemTemplate(typeFilteredProductImageInfo);
-		}); 
-		
-		resultHTML += bindProductImageItemTemplate(typeFilteredProductImageInfo[0]);
-	}else{
-			resultHTML += bindProductImageItemTemplate(productImageInfo[productImageInfo.length-1]);
-			productImageInfo.forEach(function(productImageInfo, index){
-			resultHTML += bindProductImageItemTemplate(productImageInfo);
-			resultHTML += bindProductImageItemTemplate(productImageInfo[0]);
-	    });
-	}
-	productImageList.insertAdjacentHTML("beforeend",resultHTML);
+	orderedAndFilteredList.forEach(function(orderedAndFilteredImage){
+		resultHTML += templating.bindingTemplate(productImageItemTemplate, orderedAndFilteredImage);
+	});
 	
-	$("#totalIndex").text(count);
+	templating.insertResultHTML(productImageList,resultHTML);
+	
+	$("#totalIndex").text(total);
 	$(".visual_txt_tit").children("span").html(displayInfo[0].productDescription);
 	
-	if(count < 2){
+	if(total < 2){
 		$(".prev").hide();
 		$(".nxt").hide();
 	} 
@@ -183,10 +220,9 @@ function templatingProductImage(productImageInfo,displayInfo){
 function templatingDisplayInfo(displayInfo,displayImageInfo){
 	const sectionInfoTab = document.querySelector("#section_info_tab").innerHTML;
 	let resultHTML = "";
-	let bindTemplate = Handlebars.compile(sectionInfoTab);
 	
 	displayInfo.forEach(function(displayInfo,index){
-		resultHTML += bindTemplate(displayInfo);
+		resultHTML += templating.bindingTemplate(sectionInfoTab, displayInfo);
 	});
 	$(".section_review_list").after(resultHTML);
 	
@@ -198,61 +234,60 @@ function templatingDisplayInfo(displayInfo,displayImageInfo){
 	clickSectionInfoTab();
 }
 
-function  templatingComments(displayInfoId,commentInfo,averageScore,commentCount){
+function templatingComments(displayInfoId,commentInfo,averageScore,commentCount,LIMIT){
 	const shortReviewItem = document.querySelector("#list_short_review_item").innerHTML;
 	const noImageShortReviewItem =document.querySelector("#list_short_review_item_no_img").innerHTML;
+	let shortReviewList = document.querySelector(".list_short_review");
+	const TOTAL_SCORE = 5.0;
+	
+	let averagePercent = (averageScore / TOTAL_SCORE ) * 100;
 	let resultHTML = "";
-	const Limit = 3; 
-	let i = 0;
-	const totalScore = 5.0;
-	let bindReviewItemTemplate = Handlebars.compile(shortReviewItem);
-	let bindNoImageReviewItemTemplate = Handlebars.compile(noImageShortReviewItem);
 	
 	if(commentInfo != ""){
-		 commentInfo.forEach(function(commentInfo,index){
-			 if(i < Limit){
-				 if(commentInfo.saveFileName !== null ) resultHTML += bindReviewItemTemplate(commentInfo);
-				 else resultHTML += bindNoImageReviewItemTemplate(commentInfo);
-			 	}
-			   i++;
-			 });
-		}
+		for(let nowLoadedCount = 0; nowLoadedCount < LIMIT ; nowLoadedCount++){
+			 if(commentInfo.saveFileName !== null ){
+				 resultHTML += templating.bindingTemplate(shortReviewItem, commentInfo);
+			 }else{
+				 resultHTML += templating.bindingTemplate(noImageShortReviewItem, commentInfo)
+			 }
+		 }
+	}
+	
+	templating.insertResultHTML(shortReviewList, resultHTML);
 		
-	document.querySelector(".list_short_review").insertAdjacentHTML("beforeend",resultHTML);
-	
-	let averagePercent = (averageScore / totalScore ) * 100;
-	
 	$("#averageScore").text(averageScore);
-	$(".green").text(commentCount+"건");
-	$(".btn_review_more").attr("href",displayInfoId+"/review");
-	$(".graph_value").width(averagePercent+"%");
+	$(".green").text(commentCount + "건");
+	$(".btn_review_more").attr("href",displayInfoId + "/review");
+	$(".graph_value").width(averagePercent + "%");
 }
+
 
 function clickSectionInfoTab(){
 	document.querySelector(".section_info_tab").addEventListener("click",function(evt){
-		let nowActive = document.getElementsByClassName("anchor active")
+		let nowActive = document.getElementsByClassName("anchor active");
 		
 		if(evt.target.tagName === "SPAN"){
 			  
 			  nowActive[0].className = "anchor";
 			  
 			  let clickStatus = evt.target.parentNode; 
-			  clickStatus.className = "anchor active";			  
+			  clickStatus.className = "anchor active";	
 			  
 		}else if(evt.target.tagName === "A"){
 			  nowActive[0].className = "anchor";			 
 			  let clickStatus = evt.target; 
 			  clickStatus.className = "anchor active";
 		}		
-		  if(nowActive[0].parentNode.className == "item _detail"){
-			  $(".detail_area_wrap").removeClass("hide");
-			  $(".detail_location").addClass("hide");
-			  
-		  }else if (nowActive[0].parentNode.className == "item _path"){
-			  $(".detail_area_wrap").addClass("hide");
-			  $(".detail_location").removeClass("hide");
-		  }
-	});	
+		
+		if(nowActive[0].parentNode.className == "item _detail"){
+			$(".detail_area_wrap").removeClass("hide");
+			$(".detail_location").addClass("hide");
+		}else if (nowActive[0].parentNode.className == "item _path"){
+			$(".detail_area_wrap").addClass("hide");
+			$(".detail_location").removeClass("hide");
+		}
+	});
+	
 }
 
 $(document).ready(function(){
@@ -267,5 +302,6 @@ $(document).ready(function(){
 		$(".store_details").addClass("close3");
 	});
 });
+
 
 

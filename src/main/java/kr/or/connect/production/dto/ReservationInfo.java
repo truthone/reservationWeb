@@ -17,7 +17,24 @@ public class ReservationInfo {
 	private Date modifyDate;
 	private List<ReservationInfoPrice> reservationInfoPrices;
 	
-
+	public Date getReservationDate() {
+		return reservationDate;
+	}
+	public void setReservationDate(Date reservationDate) {
+		this.reservationDate = reservationDate;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
 	public List<ReservationInfoPrice> getReservationInfoPrices() {
 		return reservationInfoPrices;
 	}
@@ -60,30 +77,14 @@ public class ReservationInfo {
 	public void setReservationEmail(String reservationEmail) {
 		this.reservationEmail = reservationEmail;
 	}
-	public Date getReservationDate() {
-		return reservationDate;
-	}
-	public void setReservationDate(Date reservationDate) {
-		this.reservationDate = reservationDate;
-	}
 	public int getCancelFlag() {
 		return cancelFlag;
 	}
 	public void setCancelFlag(int cancelFlag) {
 		this.cancelFlag = cancelFlag;
 	}
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	public Date getModifyDate() {
-		return modifyDate;
-	}
-	public void setModifyDate(Date modifyDate) {
-		this.modifyDate = modifyDate;
-	}
+
+
 	@Override
 	public String toString() {
 		return "ReservationInfo [reservationInfoId=" + reservationInfoId + ", productId=" + productId
@@ -92,8 +93,4 @@ public class ReservationInfo {
 				+ ", cancelFlag=" + cancelFlag + ", createDate=" + createDate + ", modifyDate=" + modifyDate
 				+ ", reservationInfoPrices=" + reservationInfoPrices + "]";
 	}
-	
-
-
-	
 }

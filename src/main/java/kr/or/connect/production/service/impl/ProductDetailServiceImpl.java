@@ -36,33 +36,33 @@ public class ProductDetailServiceImpl implements ProductDetailService  {
 	ProductPriceInfoDao productPriceInfoDao;
 
 	@Override
-	public List<ProductImageInfo> getProductImageInfoList(Integer displayInfoId) {
+	public List<ProductImageInfo> getProductImageInfoList(Long displayInfoId) {
 		List<ProductImageInfo>  ProductImageInfoList = productImageInfoDao.selectProductImageInfo(displayInfoId);
 		return ProductImageInfoList;
 	}
 
 	@Override
-	public List<DisplayInfo> getDisplayInfo(Integer displayInfoId) {
+	public List<DisplayInfo> getDisplayInfo(Long displayInfoId) {
 			return displayInfoDao.selectDisplayInfo(displayInfoId);
 	}
 
 	@Override
-	public List<DisplayImageInfo> getDisplayImageInfoList(Integer displayInfoId) {
+	public List<DisplayImageInfo> getDisplayImageInfoList(Long displayInfoId) {
 		return displayImageInfoDao.selectDisplayImageInfo(displayInfoId);
 	}
 
 	@Override
-	public List<CommentInfo> getCommentInfo(Integer displayInfoId){
+	public List<CommentInfo> getCommentInfo(Long displayInfoId){
 		return commentInfoDao.selectCommentInfo(displayInfoId);
 	}
 	
 	@Override
-	public int getCountCommentInfo(Integer displayInfoId) {
+	public int getCountCommentInfo(Long displayInfoId) {
 		return commentInfoDao.countCommentInfo(displayInfoId);
 	}
 	
 	@Override
-	public String getAverageScore (Integer displayInfoId) {
+	public String getAverageScore (Long displayInfoId) {
 		double averageScore = 0.0;
 		double totalScore = commentInfoDao.getcommenTotalScore(displayInfoId);
 		int totalCount = commentInfoDao.countCommentInfo(displayInfoId);
@@ -80,12 +80,12 @@ public class ProductDetailServiceImpl implements ProductDetailService  {
 	}
 
 	@Override
-	public List<ProductImageInfo> getProductMainImage(Integer displayInfoId){
+	public List<ProductImageInfo> getProductMainImage(Long displayInfoId){
 		return productImageInfoDao.selectProductMainImage(displayInfoId);
 	}
 	
 	@Override
-	public List<ProductPriceInfo> getProductPriceInfo(Integer displayInfoId){
+	public List<ProductPriceInfo> getProductPriceInfo(Long displayInfoId){
 		return productPriceInfoDao.selectProductPriceInfo(displayInfoId);
 	}
 }

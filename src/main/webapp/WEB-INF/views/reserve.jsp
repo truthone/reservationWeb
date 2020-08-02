@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
@@ -40,9 +39,9 @@
                         <ul class="visual_img">
                             <li class="item" style="width: 414px;"> 
                             <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                <div class="preview_txt">
+                                <!-- div class="preview_txt">
                                     <h2 class="preview_txt_tit"></h2> <em class="preview_txt_dsc">₩12,000 ~ </em><em class="preview_txt_dsc">2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매</em> 
-                                </div>
+                                </div -->
                             </li>
                         </ul>
                     </div>
@@ -58,7 +57,7 @@
                         <div class="form_wrap">
                             <h3 class="out_tit">예매자 정보</h3>
                             <div class="agreement_nessasary help_txt"> <span class="spr_book ico_nessasary"></span> <span>필수입력</span> </div>
-                            <form:form  modelAttribute="reservationInfo" class="form_horizontal" action = "../../api/reservations" method = "post" id = "reserveInfoForm" >
+                            <form class="form_horizontal" action = "/reservation/api/reservations" method = "post" id = "reserveInfoForm" >
                                 <div class="inline_form"> <label class="label" for="name"> <span class="spr_book ico_nessasary">필수</span> <span>예매자</span> </label>
                                     <div class="inline_control"> <input type="text" name="reservationName" id="name" class="text" placeholder="네이버" maxlength="17">
                                     	<div class="warning_msg" id="warning_msg_name">형식이 틀렸거나 너무 짧아요</div> 
@@ -78,11 +77,11 @@
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
-                                        <p class="inline_txt selected"> 2017.2.17, 총 
+                                        <p class="inline_txt selected"> <span id = "reserationDate">2017.2.17</span> , 총 
                                         <span id="totalCount">0</span>매</p>
                                     </div>
                                 </div>
-                            </form:form>
+                            </form>
                         </div>
                     </div>
                     <div class="section_booking_agreement">

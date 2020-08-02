@@ -7,7 +7,7 @@ window.addEventListener("load",function(){
 });
 
 function productCommentAjax(displayInfoId){
-	const url = "../api/products/"+displayInfoId+"/review";
+	const url = "/reservation/api/products/"+displayInfoId+"/review";
 	var oReq = new XMLHttpRequest();
 	
 	oReq.addEventListener("load",function(){
@@ -15,14 +15,15 @@ function productCommentAjax(displayInfoId){
 		let commentInfo = json.commentInfo;
 		let averageScore = json.averageScore;
 		let commentCount = json.commentCount;
-		
         templatingComments(commentInfo,averageScore,commentCount);
+        
 	});
 	
 	oReq.open("GET",url);
 	oReq.send();
 	
 }
+
 
 function  templatingComments(commentInfo,averageScore,commentCount){
 	const shortReviewItem = document.querySelector("#list_short_review_item").innerHTML;

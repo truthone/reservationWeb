@@ -29,14 +29,14 @@ public class ProductImageInfoDao {
                 .withTableName("display_info_image")
                 .usingGeneratedKeyColumns("id");
     }
-	public List<ProductImageInfo> selectProductImageInfo(Integer displayInfoId){
-		Map<String, Integer> params = new HashMap<>();
+	public List<ProductImageInfo> selectProductImageInfo(Long displayInfoId){
+		Map<String, Long> params = new HashMap<>();
 		params.put("displayInfoId", displayInfoId);
 		return jdbc.query(SELECT_PRODUCTIMAGE_INFO, params,rowMapper);
 	}
 	
-	public List<ProductImageInfo> selectProductMainImage(Integer displayInfoId){
-		Map<String, Integer> params = new HashMap<>();
+	public List<ProductImageInfo> selectProductMainImage(Long displayInfoId){
+		Map<String, Long> params = new HashMap<>();
 		params.put("displayInfoId", displayInfoId);
 		return jdbc.query(SELECT_PRODUCTIMAGE_ONLY_MAINIMAGE, params,rowMapper);
 	}

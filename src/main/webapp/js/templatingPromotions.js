@@ -1,12 +1,11 @@
 
-document.addEventListener("DOMContentloaded", function(){
+document.addEventListener("DOMContentLoaded", function(){
 	ajaxPromotions();
-	console.log("왜안돼");
 });
 
 function ajaxPromotions(){
 	let oReq = new XMLHttpRequest();
-	const url = "api/promotions";
+	const url = "/reservation/api/promotions";
 	
 	oReq.addEventListener("load",function(){
 		const json = JSON.parse(this.responseText);

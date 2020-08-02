@@ -9,12 +9,12 @@ import kr.or.connect.production.dto.ProductImageInfo;
 import kr.or.connect.production.dto.ProductPriceInfo;
 
 public interface ProductDetailService {
-	public List<ProductImageInfo> getProductImageInfoList(Integer displayInfoId);
-	List<DisplayInfo> getDisplayInfo(Integer displayInfoId);
-	List<DisplayImageInfo> getDisplayImageInfoList(Integer displayInfoId);
-	List<CommentInfo> getCommentInfo(Integer displayInfoId);
-	int getCountCommentInfo(Integer displayInfoId);
-	String getAverageScore (Integer displayInfoId);
-	List<ProductImageInfo> getProductMainImage(Integer displayInfoId);
-	List<ProductPriceInfo> getProductPriceInfo(Integer displayInfoId);
+	public List<ProductImageInfo> getProductImageInfoList(Long displayInfoId);
+	List<DisplayInfo> getDisplayInfo(Long productId);
+	List<DisplayImageInfo> getDisplayImageInfoList(Long displayInfoId);
+	List<CommentInfo> getCommentInfo(Long displayInfoId);
+	int getCountCommentInfo(Long displayInfoId);
+	String getAverageScore (Long displayInfoId);
+	List<ProductImageInfo> getProductMainImage(Long displayInfoId);
+	List<ProductPriceInfo> getProductPriceInfo(Long displayInfoId);
 }

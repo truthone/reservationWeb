@@ -5,7 +5,7 @@ window.addEventListener("load", function(){
 });
 
 function productInfoAjax(displayInfoId){
-	const url = "../../api/products/"+ displayInfoId + "/reserve";
+	const url = "/reservation/api/products/"+ displayInfoId + "/reserve";
 	var oReq = new XMLHttpRequest();
 	
 	oReq.addEventListener("load",function(){
@@ -29,8 +29,6 @@ function templatingIdDataForSubmit(displayInfoId,productId){
 	
 	let displayInfoIdInput = document.createElement('input');
 	let productIdInput = document.createElement('input');
-	let countInput = document.createElement('input');
-	let typeInput = document.createElement('input');
 	
 	displayInfoIdInput.setAttribute("type", "hidden");
 	displayInfoIdInput.setAttribute("name", "displayInfoId");
@@ -40,15 +38,8 @@ function templatingIdDataForSubmit(displayInfoId,productId){
 	productIdInput.setAttribute("name", "productId");
 	productIdInput.setAttribute("value", productId);
 	
-	countInput.setAttribute("type", "hidden");
-	countInput.setAttribute("name", "countInput");
-	countInput.setAttribute("value", $(".count_control_input").value);
-	
 	document.querySelector(".form_horizontal").appendChild(displayInfoIdInput);
 	document.querySelector(".form_horizontal").appendChild(productIdInput);
-	document.querySelector(".form_horizontal").appendChild(countInput);
-	
-	
 	
 }
 
@@ -96,9 +87,8 @@ checkValid.prototype = {
 	},
 	
 	emailValidTest : (emailValue,target) => {
-		if(!(emailValue === '') && (/^[\w+_]\w+@\w+\.\w+$/).test(emailValue)) return true;
-		else {
-			
+		if(!(emailValue === '') && (/^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/).test(emailValue)) return true;
+		else {			
 			if(target === 'email') $("#warning_msg_email").css("visibility","visible");
 			return false;
 		}
@@ -121,7 +111,10 @@ function checkSubmitValid(){
 	let nameValue = document.querySelector("[name='reservationName']").value;
 	let emailValue =  document.querySelector("[name='reservationEmail']").value;
 	let telValue =  document.querySelector("[name = 'reservationTel']").value;
-	this.checkingAllCondition(nameValue, emailValue, telValue);
+	let nowTotalCount = countTotalticketsAmount();
+	let agreementValid = $("input:checkbox[id='chk3']").prop("checked"); 
+	this.checkingAllCondition(nameValue, emailValue, telValue, nowTotalCount,agreementValid);
+	
 }
 
 checkSubmitValid.prototype = {
@@ -132,20 +125,20 @@ checkSubmitValid.prototype = {
 	},
 	
 	emailValidTest : (emailValue) => {
-		if(!(emailValue === '') && (/^[\w+_]\w+@\w+\.\w+$/).test(emailValue)) return true;
+		if(!(emailValue === '') && (/^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/).test(emailValue)) return true;
 		else return false;
 	},
 	
-	checkingAllCondition : function(nameValue, emailValue, telValue){
+	checkingAllCondition : function(nameValue, emailValue, telValue, nowTotalCount,agreementValid){
 		let emailValid = this.emailValidTest(emailValue);
 		let telValid = this.telValidTest(telValue);
-		let agreementValid = $("input:checkbox[id='chk3']").prop("checked");
 		
-		if((nameValue == '') || !emailValid || !telValid || !agreementValid){
+		if((nameValue == '') || !emailValid || !telValid || !agreementValid || nowTotalCount === 0){
 			
 			if (!emailValid) $("#warning_msg_email").css("visibility","visible");
-			if (!telValid) $("#warning_msg_tel").css("visibility","visible");
-			if (nameValue == '' ) $("#warning_msg_name").css("visibility","visible");
+			else if (!telValid) $("#warning_msg_tel").css("visibility","visible");
+			else if (nameValue == '' ) $("#warning_msg_name").css("visibility","visible");
+			else if (nowTotalCount === 0) window.alert('수량을 선택해주세요');
 			
 		}else{
 			let form = document.querySelector("#reserveInfoForm");
@@ -189,11 +182,15 @@ function templatingProductPriceInfo(productPriceInfo){
 	let bindTemplate = Handlebars.compile(Section_ticketQuantity);
 	
 	if(0 != productPriceInfo.length){
-		productPriceInfo.forEach(function(productPriceInfo,index){
-			const priceStringType = priceType.priceTypeToString(productPriceInfo.priceTypeName);
-			productPriceInfo.priceStringType = priceStringType;
-			resultHTML += bindTemplate(productPriceInfo);
-		});
+			productPriceInfo.forEach(function(productPriceInfo,index){
+				productPriceInfo.priceStringType = priceType.priceTypeToString(productPriceInfo.priceTypeName);
+				resultHTML += bindTemplate(productPriceInfo);
+			});
+		
+//		p = productPriceInfo.map(index => priceType.priceTypeToString(index.priceTypeName));
+			
+//			resultHTML += bindTemplate(p);
+	
 	}
 	
 	document.querySelector(".ticket_body").insertAdjacentHTML("beforeend",resultHTML);
@@ -219,6 +216,8 @@ function countTotalticketsAmount(){
    }
    
    $("#totalCount").text(totalCount);
+   
+   return totalCount;
 }
 
 function countControlTap(qtyTab){

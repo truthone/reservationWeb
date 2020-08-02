@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ProductController {
 
-	@RequestMapping(path="/mainpage")
+	@RequestMapping(path="mainpage")
 	public String productList(@RequestParam(name="start", required=false, defaultValue="0") int start,
 			   ModelMap model) {
 
@@ -17,14 +17,14 @@ public class ProductController {
 	}	
 	
 
-	@RequestMapping(path="products/{displayInfoId}")
+	@RequestMapping(path="/products/{displayInfoId}")
 	public String detail(@PathVariable(name="displayInfoId")int displayInfoId,
 			   ModelMap model) {
 		model.addAttribute("displayInfoId",displayInfoId);
 		return "detail";
 	}
 	
-	@RequestMapping(path="products/{displayInfoId}/review")
+	@RequestMapping(path="/products/{displayInfoId}/review")
 	public String review(@PathVariable(name="displayInfoId")int displayInfoId,
 			   ModelMap model) {
 		model.addAttribute("displayInfoId",displayInfoId);
@@ -37,7 +37,7 @@ public class ProductController {
 		return "myreservation";
 	}
 	
-	@RequestMapping(path="products/{displayInfoId}/reserve")
+	@RequestMapping(path="/products/{displayInfoId}/reserve")
 	public String reserve(@PathVariable(name="displayInfoId")int displayInfoId,
 			   ModelMap model) {
 		model.addAttribute("displayInfoId",displayInfoId);

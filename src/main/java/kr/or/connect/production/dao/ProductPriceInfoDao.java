@@ -29,9 +29,10 @@ public class ProductPriceInfoDao {
 			.usingGeneratedKeyColumns("id");
 	}
 	
-	public List <ProductPriceInfo> selectProductPriceInfo(Integer displayInfoId){
-		Map<String, Integer>  params = new HashMap<>();
+	public List <ProductPriceInfo> selectProductPriceInfo(Long displayInfoId){
+		Map<String, Long>  params = new HashMap<>();
 		params.put("displayInfoId", displayInfoId);
 		return jdbc.query(SELECT_PRODUCT_PRICE, params , rowMapper);
 	}
+
 }
