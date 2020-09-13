@@ -45,6 +45,7 @@ templating = {
 		}
 }
 
+<<<<<<< HEAD
 imageList = {
 		
 		 filterImageInfoListByType: function(productImageInfo, typeString){
@@ -138,6 +139,97 @@ function templatingComments(displayInfoId,commentInfo,averageScore,commentCount,
 	let averagePercent = (averageScore / TOTAL_SCORE ) * 100;
 	let resultHTML = "";
 	
+=======
+function filterImageInfoListByType(productImageInfo, typeString){
+	let typeFilteredInfoList = 
+		productImageInfo.filter(function(imageInfo){
+			return imageInfo.type == typeString;
+		});
+	return typeFilteredInfoList;
+}
+	
+function orderImageSequence(typeMainImageInfoList, typeEtcImageInfoList, LIMIT){
+	let orderedList = new Array();
+	let etcImagecount = 0;
+	let mainImageCount = 0;
+
+	typeMainImageInfoList.forEach(function(index){
+		orderedList.push(index);
+		mainImageCount++;
+	});
+	
+	if(mainImageCount < LIMIT){
+		typeEtcImageInfoList.forEach(function(index){
+			if(etcImagecount < LIMIT - mainImageCount){
+				orderedList.push(index);
+				etcImagecount++;
+			}
+		});
+	}
+	return orderedList;
+}
+
+function templatingProductImage(productImageInfo,displayInfo,LIMIT){
+	
+	const productImageList = document.querySelector(".visual_img");
+	const productImageItemTemplate = document.querySelector("#productImageItem").innerHTML;
+	let resultHTML="";
+	let typeMainImageInfoList = filterImageInfoListByType(productImageInfo, "ma");
+	let typeEtcImageInfoList = filterImageInfoListByType(productImageInfo, "et");
+	let orderedAndFilteredList =  orderImageSequence(typeMainImageInfoList,typeEtcImageInfoList,LIMIT);
+	const total =  orderedAndFilteredList.length;
+	
+	const listLength = orderedAndFilteredList.length;
+	const firstImage = orderedAndFilteredList[0]; 
+	const lastImage = orderedAndFilteredList[listLength-1];
+	
+	resultHTML += templating.bindingTemplate(productImageItemTemplate, lastImage);
+	orderedAndFilteredList.forEach(function(image){
+		resultHTML += templating.bindingTemplate(productImageItemTemplate, image);
+	});
+	resultHTML += templating.bindingTemplate(productImageItemTemplate, firstImage);
+	
+	templating.insertResultHTML(productImageList,resultHTML);
+	
+	$("#totalIndex").text(total);
+	$(".visual_txt_tit").children("span").html(displayInfo[0].productDescription);
+	
+	if(total < 2){
+		$(".prev").hide();
+		$(".nxt").hide();
+	} 
+	slideInfinityProductImage();
+}
+
+
+function templatingDisplayInfo(displayInfo,displayImageInfo){
+	const sectionInfoTab = document.querySelector("#section_info_tab").innerHTML;
+	let resultHTML = "";
+	
+	displayInfo.forEach(function(displayInfo,index){
+		resultHTML += templating.bindingTemplate(sectionInfoTab, displayInfo);
+	});
+	$(".section_review_list").after(resultHTML);
+	
+	const description  = displayInfo[0].productContent;
+	$(".dsc").html(description);	
+	
+	const map = displayImageInfo[0].saveFileName;
+	document.querySelector(".store_map.img_thumb").src=' ../' + map;
+	clickSectionInfoTab();
+}
+
+function templatingComments(displayInfoId,commentInfo,averageScore,commentCount,LIMIT){
+	debugger;
+	const shortReviewItem = document.querySelector("#list_short_review_item").innerHTML;
+	const noImageShortReviewItem =document.querySelector("#list_short_review_item_no_img").innerHTML;
+	let shortReviewList = document.querySelector(".list_short_review");
+	const TOTAL_SCORE = 5.0;
+	
+	let averagePercent = (averageScore / TOTAL_SCORE ) * 100;
+	let resultHTML = "";
+	
+>>>>>>> 77e2b40... 상품상세페이지 이미지무한슬라이딩 버그 수정 및 코드 리팩토링
 	if(commentInfo != ""){
 		for(let i = 0; i < LIMIT ; i++){
 			 if(commentInfo.saveFileName != null ){
@@ -221,6 +313,7 @@ function slideInfinityProductImage(){
 
 function slideProductImage(){
 	const imageList = document.querySelector(".visual_img");
+	debugger;
 	let firstItem = imageList.firstElementChild;
 	let lastItem = imageList.lastElementChild;
 	firstItem.id = "FIRST";
