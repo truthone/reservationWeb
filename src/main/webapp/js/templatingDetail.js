@@ -46,6 +46,9 @@ templating = {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 57e2cd5... 객체리터럴 추가
 imageList = {
 		
 		 filterImageInfoListByType: function(productImageInfo, typeString){
@@ -60,6 +63,7 @@ imageList = {
 			let orderedList = new Array();
 			let etcImagecount = 0;
 			let mainImageCount = 0;
+<<<<<<< HEAD
 
 			typeMainImageInfoList.forEach(function(index){
 				orderedList.push(index);
@@ -152,53 +156,54 @@ function orderImageSequence(typeMainImageInfoList, typeEtcImageInfoList, LIMIT){
 	let orderedList = new Array();
 	let etcImagecount = 0;
 	let mainImageCount = 0;
+=======
+>>>>>>> 57e2cd5... 객체리터럴 추가
 
-	typeMainImageInfoList.forEach(function(index){
-		orderedList.push(index);
-		mainImageCount++;
-	});
-	
-	if(mainImageCount < LIMIT){
-		typeEtcImageInfoList.forEach(function(index){
-			if(etcImagecount < LIMIT - mainImageCount){
+			typeMainImageInfoList.forEach(function(index){
 				orderedList.push(index);
-				etcImagecount++;
+				mainImageCount++;
+			});
+			
+			if(mainImageCount < LIMIT){
+				typeEtcImageInfoList.forEach(function(index){
+					if(etcImagecount < LIMIT - mainImageCount){
+						orderedList.push(index);
+						etcImagecount++;
+					}
+				});
 			}
-		});
-	}
-	return orderedList;
-}
-
-function templatingProductImage(productImageInfo,displayInfo,LIMIT){
-	
-	const productImageList = document.querySelector(".visual_img");
-	const productImageItemTemplate = document.querySelector("#productImageItem").innerHTML;
-	let resultHTML="";
-	let typeMainImageInfoList = filterImageInfoListByType(productImageInfo, "ma");
-	let typeEtcImageInfoList = filterImageInfoListByType(productImageInfo, "et");
-	let orderedAndFilteredList =  orderImageSequence(typeMainImageInfoList,typeEtcImageInfoList,LIMIT);
-	const total =  orderedAndFilteredList.length;
-	
-	const listLength = orderedAndFilteredList.length;
-	const firstImage = orderedAndFilteredList[0]; 
-	const lastImage = orderedAndFilteredList[listLength-1];
-	
-	resultHTML += templating.bindingTemplate(productImageItemTemplate, lastImage);
-	orderedAndFilteredList.forEach(function(image){
-		resultHTML += templating.bindingTemplate(productImageItemTemplate, image);
-	});
-	resultHTML += templating.bindingTemplate(productImageItemTemplate, firstImage);
-	
-	templating.insertResultHTML(productImageList,resultHTML);
-	
-	$("#totalIndex").text(total);
-	$(".visual_txt_tit").children("span").html(displayInfo[0].productDescription);
-	
-	if(total < 2){
-		$(".prev").hide();
-		$(".nxt").hide();
-	} 
-	slideInfinityProductImage();
+			return orderedList;
+		},
+		
+		templatingProductImage: function(productImageList,productImageInfo,displayInfo,LIMIT){
+			const productImageItemTemplate = document.querySelector("#productImageItem").innerHTML;
+			let resultHTML="";
+			let typeMainImageInfoList = this.filterImageInfoListByType(productImageInfo, "ma");
+			let typeEtcImageInfoList = this.filterImageInfoListByType(productImageInfo, "et");
+			let orderedAndFilteredList =  this.orderImageSequence(typeMainImageInfoList,typeEtcImageInfoList,LIMIT);
+			const total =  orderedAndFilteredList.length;
+			
+			const listLength = orderedAndFilteredList.length;
+			const firstImage = orderedAndFilteredList[0]; 
+			const lastImage = orderedAndFilteredList[listLength-1];
+			
+			resultHTML += templating.bindingTemplate(productImageItemTemplate, lastImage);
+			orderedAndFilteredList.forEach(function(image){
+				resultHTML += templating.bindingTemplate(productImageItemTemplate, image);
+			});
+			resultHTML += templating.bindingTemplate(productImageItemTemplate, firstImage);
+			
+			templating.insertResultHTML(productImageList,resultHTML);
+			
+			
+			$("#totalIndex").text(total);
+			
+			if(total < 2){
+				$(".prev").hide();
+				$(".nxt").hide();
+			} 
+			slideInfinityProductImage();
+		}
 }
 
 
@@ -214,13 +219,16 @@ function templatingDisplayInfo(displayInfo,displayImageInfo){
 	const description  = displayInfo[0].productContent;
 	$(".dsc").html(description);	
 	
+	const productTitle = displayInfo[0].productDescription;
+	$(".visual_txt_tit").children("span").html(productTitle);
+	
 	const map = displayImageInfo[0].saveFileName;
 	document.querySelector(".store_map.img_thumb").src=' ../' + map;
 	clickSectionInfoTab();
 }
 
+
 function templatingComments(displayInfoId,commentInfo,averageScore,commentCount,LIMIT){
-	debugger;
 	const shortReviewItem = document.querySelector("#list_short_review_item").innerHTML;
 	const noImageShortReviewItem =document.querySelector("#list_short_review_item_no_img").innerHTML;
 	let shortReviewList = document.querySelector(".list_short_review");
@@ -313,7 +321,6 @@ function slideInfinityProductImage(){
 
 function slideProductImage(){
 	const imageList = document.querySelector(".visual_img");
-	debugger;
 	let firstItem = imageList.firstElementChild;
 	let lastItem = imageList.lastElementChild;
 	firstItem.id = "FIRST";
