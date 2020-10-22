@@ -45,10 +45,6 @@ templating = {
 		}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 57e2cd5... 객체리터럴 추가
 imageList = {
 		
 		 filterImageInfoListByType: function(productImageInfo, typeString){
@@ -63,7 +59,6 @@ imageList = {
 			let orderedList = new Array();
 			let etcImagecount = 0;
 			let mainImageCount = 0;
-<<<<<<< HEAD
 
 			typeMainImageInfoList.forEach(function(index){
 				orderedList.push(index);
@@ -143,7 +138,6 @@ function templatingComments(displayInfoId,commentInfo,averageScore,commentCount,
 	let averagePercent = (averageScore / TOTAL_SCORE ) * 100;
 	let resultHTML = "";
 	
-=======
 function filterImageInfoListByType(productImageInfo, typeString){
 	let typeFilteredInfoList = 
 		productImageInfo.filter(function(imageInfo){
@@ -156,8 +150,7 @@ function orderImageSequence(typeMainImageInfoList, typeEtcImageInfoList, LIMIT){
 	let orderedList = new Array();
 	let etcImagecount = 0;
 	let mainImageCount = 0;
-=======
->>>>>>> 57e2cd5... 객체리터럴 추가
+
 
 			typeMainImageInfoList.forEach(function(index){
 				orderedList.push(index);
@@ -237,7 +230,7 @@ function templatingComments(displayInfoId,commentInfo,averageScore,commentCount,
 	let averagePercent = (averageScore / TOTAL_SCORE ) * 100;
 	let resultHTML = "";
 	
->>>>>>> 77e2b40... 상품상세페이지 이미지무한슬라이딩 버그 수정 및 코드 리팩토링
+
 	if(commentInfo != ""){
 		for(let i = 0; i < LIMIT ; i++){
 			 if(commentInfo.saveFileName != null ){
