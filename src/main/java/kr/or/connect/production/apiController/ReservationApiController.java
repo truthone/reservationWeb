@@ -39,7 +39,7 @@ public class ReservationApiController {
 				
 		ArrayList<Object> list = new ArrayList<Object>();
 		
-		for(int i = 0 ; i < myReservaitionList.size(); i++) {
+		for (int i = 0; i < myReservaitionList.size(); i++) {
 			Map<String,Object> reservationMap = new HashMap<>();
 			List<MyReservationPriceInfoAndCount> InfoPrice = reservationService.getMyReservationPriceInfo(myReservaitionList.get(i).getReservationInfoId());
 			Long productId = myReservaitionList.get(i).getProductId();
