@@ -9,41 +9,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ProductController {
 
-	@RequestMapping(path="mainpage")
-	public String productList(@RequestParam(name="start", required=false, defaultValue="0") int start,
-			   ModelMap model) {
+  @RequestMapping(path = "mainpage")
+  public String productList(
+    @RequestParam(
+      name = "start",
+      required = false,
+      defaultValue = "0"
+    ) int start,
+    ModelMap model
+  ) {
+    return "mainpage";
+  }
 
-		return "mainpage";
-	}	
-	
+  @RequestMapping(path = "/products/{displayInfoId}")
+  public String detail(
+    @PathVariable(name = "displayInfoId") int displayInfoId,
+    ModelMap model
+  ) {
+    model.addAttribute("displayInfoId", displayInfoId);
+    return "detail";
+  }
 
-	@RequestMapping(path="/products/{displayInfoId}")
-	public String detail(@PathVariable(name="displayInfoId")int displayInfoId,
-			   ModelMap model) {
-		model.addAttribute("displayInfoId",displayInfoId);
-		return "detail";
-	}
-	
-	@RequestMapping(path="/products/{displayInfoId}/review")
-	public String review(@PathVariable(name="displayInfoId")int displayInfoId,
-			   ModelMap model) {
-		model.addAttribute("displayInfoId",displayInfoId);
-		return "review";
-	}
-	
-	
-	@RequestMapping(path="/myreservation")
-	public String myReservation() {
-		return "myreservation";
-	}
-	
-	@RequestMapping(path="/products/{displayInfoId}/reserve")
-	public String reserve(@PathVariable(name="displayInfoId")int displayInfoId,
-			   ModelMap model) {
-		model.addAttribute("displayInfoId",displayInfoId);
-		return "reserve";
-	}
-	
-	
-	
+  @RequestMapping(path = "/products/{displayInfoId}/review")
+  public String review(
+    @PathVariable(name = "displayInfoId") int displayInfoId,
+    ModelMap model
+  ) {
+    model.addAttribute("displayInfoId", displayInfoId);
+    return "review";
+  }
+
+  @RequestMapping(path = "/myreservation")
+  public String myReservation() {
+    return "myreservation";
+  }
+
+  @RequestMapping(path = "/products/{displayInfoId}/reserve")
+  public String reserve(
+    @PathVariable(name = "displayInfoId") int displayInfoId,
+    ModelMap model
+  ) {
+    model.addAttribute("displayInfoId", displayInfoId);
+    return "reserve";
+  }
 }
